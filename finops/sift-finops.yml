@@ -1,0 +1,100 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Sift
+providerId: sift
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Fraud Detection
+- Trust and Safety
+- Machine Learning
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Sift spend. Sift is a commercial digital trust and safety
+  platform billed under a custom, sales-negotiated agreement rather than public
+  usage rates. Cost is typically driven by the products enabled (Payment
+  Protection, Account Defense, Content Integrity, Dispute Management, plus add-ons
+  like PSP Merchant Management and Verification) and by assessed volume - events,
+  transactions, or users scored. Because pricing is bespoke and not published,
+  the meters and columns below are modeled to structure cost tracking, not
+  reconciled against a Sift rate card.
+notes: >-
+  Per-unit rates are not reconciled here; obtain them from your Sift agreement.
+  The dominant cost drivers are contracted product scope and assessed volume.
+  Verification (OTP delivery) and PSP Merchant Management may carry separate
+  add-on costs. Confirm all figures during procurement and true-up.
+sources:
+- https://sift.com/
+- https://sift.com/pricing
+- https://developers.sift.com/docs
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Sift
+serviceCategory: Security and Fraud Prevention
+billingModel:
+  pricingCategory: Committed-Use
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Sift Digital Trust and Safety Platform
+  ServiceCategory: Security and Fraud Prevention
+  ProviderName: Sift
+  PublisherName: Sift
+  InvoiceIssuerName: Sift
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Committed-Use
+meters:
+- name: events_assessed
+  description: User events / transactions sent to the Events API and scored, the primary volume driver. Rate per commercial agreement.
+  unit: events
+  aggregation: sum
+  dimensions:
+  - account
+  - product
+  - abuse_type
+- name: users_scored
+  description: Distinct users assessed for risk in a period, an alternative volume basis in some agreements.
+  unit: users
+  aggregation: sum
+  dimensions:
+  - account
+  - product
+- name: verifications_sent
+  description: One-time passcodes sent via the Verification API; may carry add-on cost including OTP delivery.
+  unit: messages
+  aggregation: sum
+  dimensions:
+  - account
+  - channel
+- name: psp_merchants_managed
+  description: Sub-merchant profiles monitored via PSP Merchant Management, relevant to payment service providers.
+  unit: merchants
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track assessed event / user volume per product and abuse type against the contracted commitment to avoid overage surprises.
+- name: Allocation
+  description: Tag events by product line (payment, account, content) and business unit so trust-and-safety spend maps to internal cost centers.
+- name: Optimization
+  description: Scope which events are sent for scoring and which abuse types are enabled; use Workflows to avoid redundant synchronous scoring; right-size add-ons like Verification and PSP Merchant Management.
+- name: Accountability
+  description: Assign an owner for the Sift agreement; review monthly assessed volume against the committed tier and true-up at renewal.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

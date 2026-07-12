@@ -1,0 +1,119 @@
+aid: sift
+name: Sift
+review:
+  question: Does Sift expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-12'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Sift's public API surface is entirely
+    request/response REST over HTTPS at https://api.sift.com. Sift does push
+    event-driven notifications outbound - decision webhooks POST to a customer
+    endpoint when a decision is applied - but that is server-to-endpoint HTTP,
+    not a WebSocket the client connects to, and no SSE stream is documented on
+    Sift's own API. There is no server-push transport on Sift's own API to model
+    as AsyncAPI.
+findings:
+  summary: |
+    Sift does not publish a documented public WebSocket API. Sift is a digital
+    trust and safety (fraud/abuse detection) platform. Its public developer API
+    is REST over HTTPS with a single base host, https://api.sift.com, and is
+    authenticated with an API key (as $api_key in the JSON body, or via HTTP
+    Basic auth with the API key as username and an empty password; account-scoped
+    APIs additionally require a numeric Account ID in the path). Versioning is
+    per API family: Events, Score, and Labels are on v205; Decisions, Workflows,
+    and PSP Merchant Management are on v3; Verification is on v1. No realtime,
+    bidirectional, or streaming WebSocket (ws:// or wss://) endpoint is
+    documented anywhere in Sift's developer documentation or its official client
+    libraries as of the review date. Asynchronous decision delivery is handled by
+    outbound HTTP webhooks, not WebSockets.
+  accessModel: |
+    Sift is a commercial, sales-led B2B platform. An account and API credentials
+    are provisioned through onboarding; the API is not self-serve and pricing is
+    custom (contact sales). The API and its client libraries (Python, Ruby, Java,
+    Node, PHP) are public and documented, but exercising them requires a paid
+    account and a valid API key plus Account ID.
+  modeledArtifactNote: |
+    Sift does not publish a single machine-readable OpenAPI definition. The
+    OpenAPI at openapi/sift-openapi.yml was MODELED by API Evangelist from Sift's
+    public developer documentation and its official open-source client libraries
+    (which encode exact paths, methods, and versions). Endpoint paths, HTTP
+    methods, versions, and auth are confirmed against those sources. Request and
+    response bodies are representative: Sift documents examples and field
+    dictionaries rather than full JSON Schemas for most resources, so schema
+    shapes here are modeled honestly from documented example payloads and may not
+    enumerate every optional field.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.sift.com
+      documented: true
+      note: All Sift public APIs (Events, Score, Decisions, Workflows, Labels, Verification, PSP Merchant Management) are HTTPS REST under this host.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Sift POSTs decision notifications outbound to a customer-configured HTTPS endpoint. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Sift's developer docs or client libraries as of the review date.
+  endpointsConfirmed:
+    - POST   https://api.sift.com/v205/events
+    - GET    https://api.sift.com/v205/score/{user_id}
+    - GET    https://api.sift.com/v205/users/{user_id}/score
+    - POST   https://api.sift.com/v205/users/{user_id}/score
+    - POST   https://api.sift.com/v205/users/{user_id}/labels
+    - DELETE https://api.sift.com/v205/users/{user_id}/labels
+    - GET    https://api.sift.com/v3/accounts/{account_id}/decisions
+    - GET    https://api.sift.com/v3/accounts/{account_id}/users/{user_id}/decisions
+    - POST   https://api.sift.com/v3/accounts/{account_id}/users/{user_id}/decisions
+    - POST   https://api.sift.com/v3/accounts/{account_id}/users/{user_id}/orders/{order_id}/decisions
+    - POST   https://api.sift.com/v3/accounts/{account_id}/users/{user_id}/sessions/{session_id}/decisions
+    - POST   https://api.sift.com/v3/accounts/{account_id}/users/{user_id}/content/{content_id}/decisions
+    - GET    https://api.sift.com/v3/accounts/{account_id}/workflows/runs/{run_id}
+    - POST   https://api.sift.com/v3/accounts/{account_id}/psp_management/merchants
+    - GET    https://api.sift.com/v3/accounts/{account_id}/psp_management/merchants
+    - GET    https://api.sift.com/v3/accounts/{account_id}/psp_management/merchants/{merchant_id}
+    - PUT    https://api.sift.com/v3/accounts/{account_id}/psp_management/merchants/{merchant_id}
+    - POST   https://api.sift.com/v1/verification/send
+    - POST   https://api.sift.com/v1/verification/resend
+    - POST   https://api.sift.com/v1/verification/check
+  endpointsModeledSchemas:
+    - note: >-
+        Paths/methods above are confirmed from Sift docs and official client
+        libraries. The JSON request/response bodies for these endpoints in
+        openapi/sift-openapi.yml are modeled from documented example payloads
+        (Event with reserved $-prefixed fields, Score with reason codes,
+        Decision with source/analyst/description, Verification send/check) and
+        are representative rather than an exhaustive, Sift-published schema.
+  webSocketFound: false
+sources:
+  - url: https://developers.sift.com/docs
+    type: Documentation
+    note: Developer documentation home. All APIs are HTTPS REST; no WebSocket surface.
+  - url: https://developers.sift.com/docs/curl/apis-overview
+    type: APIReference
+    note: APIs overview confirms base host api.sift.com, POST /v205/events, and the API-key auth methods.
+  - url: https://developers.sift.com/docs/curl/score-api/overview
+    type: Documentation
+    note: Score API - Sift Score 0-100 per abuse type with reason codes.
+  - url: https://developers.sift.com/docs/curl/decisions-api/overview
+    type: Documentation
+    note: Decisions API - apply/retrieve decisions on users, orders, sessions, content.
+  - url: https://github.com/SiftScience/sift-python
+    type: SourceCode
+    note: Official Python client; encodes exact endpoint paths, HTTP methods, and per-API versions used to confirm the endpoint list.
+  - url: https://github.com/SiftScience/sift-ruby
+    type: SourceCode
+    note: Official Ruby client; corroborates endpoint paths and methods.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists on Sift's own API. Sift's public API is
+    request/response REST (Events, Score, Decisions, Workflows, Labels,
+    Verification, PSP Merchant Management), with asynchronous outcomes delivered
+    via outbound HTTP webhooks. No AsyncAPI document was created because there is
+    no client-facing server-push transport (WebSocket or SSE) on Sift's own API
+    to model.

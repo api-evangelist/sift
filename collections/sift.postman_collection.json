@@ -1,0 +1,248 @@
+{
+  "info": {
+    "name": "Sift API",
+    "description": "Sift digital trust and safety REST APIs - Events, Score, Decisions, Workflows, Labels (legacy), Verification (OTP), and PSP Merchant Management. Base URL: https://api.sift.com. Authenticate with your Sift REST API key via HTTP Basic auth (API key as username, empty password); ingestion APIs also accept the key as $api_key in the JSON body. Account-scoped APIs also require your numeric Account ID. MODELED by API Evangelist from developers.sift.com and the official Sift client libraries; request/response bodies are representative.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{apiKey}}", "type": "string" },
+      { "key": "password", "value": "", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.sift.com", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" },
+    { "key": "accountId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Send an event",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"$type\": \"$create_order\",\n  \"$api_key\": \"{{apiKey}}\",\n  \"$user_id\": \"billy_jones_301\",\n  \"$order_id\": \"ORDER-28168441\",\n  \"$amount\": 115940000,\n  \"$currency_code\": \"USD\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v205/events?return_score=true&abuse_types=payment_abuse", "host": ["{{baseUrl}}"], "path": ["v205", "events"], "query": [{ "key": "return_score", "value": "true" }, { "key": "abuse_types", "value": "payment_abuse" }] },
+            "description": "Records a user event so Sift can update its models. Set return_score=true to receive a Sift Score inline."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Score",
+      "item": [
+        {
+          "name": "Get a user's Sift Score",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v205/score/:user_id?abuse_types=payment_abuse,account_takeover", "host": ["{{baseUrl}}"], "path": ["v205", "score", ":user_id"], "query": [{ "key": "abuse_types", "value": "payment_abuse,account_takeover" }], "variable": [{ "key": "user_id", "value": "billy_jones_301" }] },
+            "description": "Retrieves the current Sift Score(s) for a user (0-100, higher is riskier) with reason codes."
+          }
+        },
+        {
+          "name": "Get latest score (no recompute)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v205/users/:user_id/score", "host": ["{{baseUrl}}"], "path": ["v205", "users", ":user_id", "score"], "variable": [{ "key": "user_id", "value": "billy_jones_301" }] },
+            "description": "Fetches the latest previously computed Sift Score without recomputing."
+          }
+        },
+        {
+          "name": "Rescore a user",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/v205/users/:user_id/score?abuse_types=payment_abuse", "host": ["{{baseUrl}}"], "path": ["v205", "users", ":user_id", "score"], "query": [{ "key": "abuse_types", "value": "payment_abuse" }], "variable": [{ "key": "user_id", "value": "billy_jones_301" }] },
+            "description": "Recomputes and returns the Sift Score for a user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Labels (Legacy)",
+      "item": [
+        {
+          "name": "Apply a label",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"$api_key\": \"{{apiKey}}\",\n  \"$is_bad\": true,\n  \"$abuse_type\": \"payment_abuse\",\n  \"$description\": \"Chargeback received\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v205/users/:user_id/labels", "host": ["{{baseUrl}}"], "path": ["v205", "users", ":user_id", "labels"], "variable": [{ "key": "user_id", "value": "billy_jones_301" }] },
+            "description": "Labels a user as good or bad for an abuse type. Legacy - prefer the Decisions API."
+          }
+        },
+        {
+          "name": "Remove a label",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v205/users/:user_id/labels?abuse_type=payment_abuse", "host": ["{{baseUrl}}"], "path": ["v205", "users", ":user_id", "labels"], "query": [{ "key": "abuse_type", "value": "payment_abuse" }], "variable": [{ "key": "user_id", "value": "billy_jones_301" }] },
+            "description": "Removes a previously applied label from a user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Decisions",
+      "item": [
+        {
+          "name": "List configured decisions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v3/accounts/:account_id/decisions", "host": ["{{baseUrl}}"], "path": ["v3", "accounts", ":account_id", "decisions"], "variable": [{ "key": "account_id", "value": "{{accountId}}" }] },
+            "description": "Lists the decisions configured for an account."
+          }
+        },
+        {
+          "name": "Get decision status for a user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v3/accounts/:account_id/users/:user_id/decisions", "host": ["{{baseUrl}}"], "path": ["v3", "accounts", ":account_id", "users", ":user_id", "decisions"], "variable": [{ "key": "account_id", "value": "{{accountId}}" }, { "key": "user_id", "value": "billy_jones_301" }] },
+            "description": "Retrieves the latest decisions applied to a user, per abuse type."
+          }
+        },
+        {
+          "name": "Apply a decision to a user",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"decision_id\": \"block_user_payment_abuse\",\n  \"source\": \"MANUAL_REVIEW\",\n  \"analyst\": \"analyst@example.com\",\n  \"description\": \"Blocking known fraud user\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v3/accounts/:account_id/users/:user_id/decisions", "host": ["{{baseUrl}}"], "path": ["v3", "accounts", ":account_id", "users", ":user_id", "decisions"], "variable": [{ "key": "account_id", "value": "{{accountId}}" }, { "key": "user_id", "value": "billy_jones_301" }] },
+            "description": "Applies a decision (accept, watch, block) to a user."
+          }
+        },
+        {
+          "name": "Apply a decision to an order",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"decision_id\": \"block_order_payment_abuse\",\n  \"source\": \"AUTOMATED_RULE\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v3/accounts/:account_id/users/:user_id/orders/:order_id/decisions", "host": ["{{baseUrl}}"], "path": ["v3", "accounts", ":account_id", "users", ":user_id", "orders", ":order_id", "decisions"], "variable": [{ "key": "account_id", "value": "{{accountId}}" }, { "key": "user_id", "value": "billy_jones_301" }, { "key": "order_id", "value": "ORDER-28168441" }] },
+            "description": "Applies a decision to a specific order belonging to a user."
+          }
+        },
+        {
+          "name": "Apply a decision to a session",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"decision_id\": \"watch_session_ato\",\n  \"source\": \"AUTOMATED_RULE\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v3/accounts/:account_id/users/:user_id/sessions/:session_id/decisions", "host": ["{{baseUrl}}"], "path": ["v3", "accounts", ":account_id", "users", ":user_id", "sessions", ":session_id", "decisions"], "variable": [{ "key": "account_id", "value": "{{accountId}}" }, { "key": "user_id", "value": "billy_jones_301" }, { "key": "session_id", "value": "SESSION-1234" }] },
+            "description": "Applies a decision to a specific session belonging to a user."
+          }
+        },
+        {
+          "name": "Apply a decision to content",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"decision_id\": \"block_content_content_abuse\",\n  \"source\": \"MANUAL_REVIEW\",\n  \"analyst\": \"analyst@example.com\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v3/accounts/:account_id/users/:user_id/content/:content_id/decisions", "host": ["{{baseUrl}}"], "path": ["v3", "accounts", ":account_id", "users", ":user_id", "content", ":content_id", "decisions"], "variable": [{ "key": "account_id", "value": "{{accountId}}" }, { "key": "user_id", "value": "billy_jones_301" }, { "key": "content_id", "value": "CONTENT-9012" }] },
+            "description": "Applies a decision to a specific piece of content created by a user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workflows",
+      "item": [
+        {
+          "name": "Get a workflow run status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v3/accounts/:account_id/workflows/runs/:run_id", "host": ["{{baseUrl}}"], "path": ["v3", "accounts", ":account_id", "workflows", "runs", ":run_id"], "variable": [{ "key": "account_id", "value": "{{accountId}}" }, { "key": "run_id", "value": "" }] },
+            "description": "Retrieves the status and applied decisions of a Sift Workflow run."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Verification",
+      "item": [
+        {
+          "name": "Send a verification code",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"$user_id\": \"billy_jones_301\",\n  \"send_to\": \"billy@example.com\",\n  \"verification_type\": \"$email\",\n  \"brand_name\": \"ACME\",\n  \"language\": \"en\",\n  \"event\": {\n    \"$session_id\": \"SESSION-1234\",\n    \"$verified_event\": \"$login\"\n  }\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/verification/send", "host": ["{{baseUrl}}"], "path": ["v1", "verification", "send"] },
+            "description": "Triggers generation and delivery of a one-time passcode (OTP) to a user."
+          }
+        },
+        {
+          "name": "Resend a verification code",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"$user_id\": \"billy_jones_301\",\n  \"verified_event\": \"$login\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/verification/resend", "host": ["{{baseUrl}}"], "path": ["v1", "verification", "resend"] },
+            "description": "Requests a new one-time passcode for a pending verification."
+          }
+        },
+        {
+          "name": "Check a verification code",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"$user_id\": \"billy_jones_301\",\n  \"$code\": 123456,\n  \"verified_event\": \"$login\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/verification/check", "host": ["{{baseUrl}}"], "path": ["v1", "verification", "check"] },
+            "description": "Validates the one-time passcode provided by the user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "PSP Merchant Management",
+      "item": [
+        {
+          "name": "List PSP merchants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v3/accounts/:account_id/psp_management/merchants?batch_size=100", "host": ["{{baseUrl}}"], "path": ["v3", "accounts", ":account_id", "psp_management", "merchants"], "query": [{ "key": "batch_size", "value": "100" }], "variable": [{ "key": "account_id", "value": "{{accountId}}" }] },
+            "description": "Lists sub-merchant profiles for an account, paginated."
+          }
+        },
+        {
+          "name": "Create a PSP merchant",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"id\": \"merchant-01\",\n  \"name\": \"Acme Marketplace Seller\",\n  \"description\": \"Electronics reseller\",\n  \"status\": \"active\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v3/accounts/:account_id/psp_management/merchants", "host": ["{{baseUrl}}"], "path": ["v3", "accounts", ":account_id", "psp_management", "merchants"], "variable": [{ "key": "account_id", "value": "{{accountId}}" }] },
+            "description": "Creates a new sub-merchant profile under an account."
+          }
+        },
+        {
+          "name": "Get a PSP merchant",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v3/accounts/:account_id/psp_management/merchants/:merchant_id", "host": ["{{baseUrl}}"], "path": ["v3", "accounts", ":account_id", "psp_management", "merchants", ":merchant_id"], "variable": [{ "key": "account_id", "value": "{{accountId}}" }, { "key": "merchant_id", "value": "merchant-01" }] },
+            "description": "Retrieves a specific sub-merchant profile."
+          }
+        },
+        {
+          "name": "Update a PSP merchant",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"id\": \"merchant-01\",\n  \"name\": \"Acme Marketplace Seller\",\n  \"status\": \"inactive\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v3/accounts/:account_id/psp_management/merchants/:merchant_id", "host": ["{{baseUrl}}"], "path": ["v3", "accounts", ":account_id", "psp_management", "merchants", ":merchant_id"], "variable": [{ "key": "account_id", "value": "{{accountId}}" }, { "key": "merchant_id", "value": "merchant-01" }] },
+            "description": "Updates an existing sub-merchant profile."
+          }
+        }
+      ]
+    }
+  ]
+}

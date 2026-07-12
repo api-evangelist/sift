@@ -1,0 +1,20 @@
+generated: '2026-07-12'
+method: derived
+source: openapi/sift-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: apiKeyBasic
+  type: http
+  scheme: basic
+  description: >-
+    HTTP Basic authentication using your Sift REST API key as the username and an
+    empty password (Authorization: Basic base64(api_key + ":")). The ingestion
+    APIs (Events, Score, Labels) also accept the key as `$api_key` in the JSON
+    request body. Account-scoped APIs (Decisions, Workflows, PSP Merchant
+    Management) additionally require your numeric Account ID in the URL path.
+    Mobile SDKs authenticate separately with a Beacon Key. There is no OAuth.
+  sources:
+  - openapi/sift-openapi.yml
+  - https://developers.sift.com/docs/curl/apis-overview

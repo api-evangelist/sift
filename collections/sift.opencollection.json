@@ -1,0 +1,292 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sift API",
+    "version": "2026-07-12",
+    "description": "Sift digital trust and safety REST APIs - Events, Score, Decisions, Workflows, Labels (legacy), Verification (OTP), and PSP Merchant Management. Base URL https://api.sift.com. Authenticate with your Sift REST API key via HTTP Basic auth (key as username, empty password); ingestion APIs also accept the key as $api_key in the body. Account-scoped APIs require your numeric Account ID. MODELED by API Evangelist from developers.sift.com and the official Sift client libraries."
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{apiKey}}",
+      "password": ""
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Events", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Send an event", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v205/events?return_score=true&abuse_types=payment_abuse",
+            "params": [
+              { "name": "return_score", "value": "true", "type": "query", "description": "Return the Sift Score inline." },
+              { "name": "abuse_types", "value": "payment_abuse", "type": "query", "description": "Abuse types to score against." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"$type\": \"$create_order\",\n  \"$api_key\": \"{{apiKey}}\",\n  \"$user_id\": \"billy_jones_301\",\n  \"$order_id\": \"ORDER-28168441\",\n  \"$amount\": 115940000,\n  \"$currency_code\": \"USD\"\n}" }
+          },
+          "docs": "Records a user event so Sift can update its models. Reserved event types are prefixed with $."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Score", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get a user's Sift Score", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v205/score/:user_id?abuse_types=payment_abuse,account_takeover",
+            "params": [
+              { "name": "user_id", "value": "billy_jones_301", "type": "path", "description": "The user ID." },
+              { "name": "abuse_types", "value": "payment_abuse,account_takeover", "type": "query", "description": "Abuse types to return." }
+            ]
+          },
+          "docs": "Retrieves the current Sift Score(s) for a user (0-100, higher is riskier) with reason codes."
+        },
+        {
+          "info": { "name": "Get latest score (no recompute)", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v205/users/:user_id/score",
+            "params": [
+              { "name": "user_id", "value": "billy_jones_301", "type": "path", "description": "The user ID." }
+            ]
+          },
+          "docs": "Fetches the latest previously computed Sift Score without recomputing."
+        },
+        {
+          "info": { "name": "Rescore a user", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v205/users/:user_id/score?abuse_types=payment_abuse",
+            "params": [
+              { "name": "user_id", "value": "billy_jones_301", "type": "path", "description": "The user ID." },
+              { "name": "abuse_types", "value": "payment_abuse", "type": "query", "description": "Abuse types to rescore." }
+            ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Recomputes and returns the Sift Score for a user."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Labels (Legacy)", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Apply a label", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v205/users/:user_id/labels",
+            "params": [
+              { "name": "user_id", "value": "billy_jones_301", "type": "path", "description": "The user ID." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"$api_key\": \"{{apiKey}}\",\n  \"$is_bad\": true,\n  \"$abuse_type\": \"payment_abuse\",\n  \"$description\": \"Chargeback received\"\n}" }
+          },
+          "docs": "Labels a user as good or bad for an abuse type. Legacy - prefer the Decisions API."
+        },
+        {
+          "info": { "name": "Remove a label", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sift.com/v205/users/:user_id/labels?abuse_type=payment_abuse",
+            "params": [
+              { "name": "user_id", "value": "billy_jones_301", "type": "path", "description": "The user ID." },
+              { "name": "abuse_type", "value": "payment_abuse", "type": "query", "description": "The abuse type of the label to remove." }
+            ]
+          },
+          "docs": "Removes a previously applied label from a user."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Decisions", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List configured decisions", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v3/accounts/:account_id/decisions",
+            "params": [
+              { "name": "account_id", "value": "{{accountId}}", "type": "path", "description": "Your numeric Sift Account ID." }
+            ]
+          },
+          "docs": "Lists the decisions configured for an account."
+        },
+        {
+          "info": { "name": "Get decision status for a user", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v3/accounts/:account_id/users/:user_id/decisions",
+            "params": [
+              { "name": "account_id", "value": "{{accountId}}", "type": "path", "description": "Your numeric Sift Account ID." },
+              { "name": "user_id", "value": "billy_jones_301", "type": "path", "description": "The user ID." }
+            ]
+          },
+          "docs": "Retrieves the latest decisions applied to a user, per abuse type."
+        },
+        {
+          "info": { "name": "Apply a decision to a user", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v3/accounts/:account_id/users/:user_id/decisions",
+            "params": [
+              { "name": "account_id", "value": "{{accountId}}", "type": "path", "description": "Your numeric Sift Account ID." },
+              { "name": "user_id", "value": "billy_jones_301", "type": "path", "description": "The user ID." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"decision_id\": \"block_user_payment_abuse\",\n  \"source\": \"MANUAL_REVIEW\",\n  \"analyst\": \"analyst@example.com\",\n  \"description\": \"Blocking known fraud user\"\n}" }
+          },
+          "docs": "Applies a decision (accept, watch, block) to a user."
+        },
+        {
+          "info": { "name": "Apply a decision to an order", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v3/accounts/:account_id/users/:user_id/orders/:order_id/decisions",
+            "params": [
+              { "name": "account_id", "value": "{{accountId}}", "type": "path", "description": "Your numeric Sift Account ID." },
+              { "name": "user_id", "value": "billy_jones_301", "type": "path", "description": "The user ID." },
+              { "name": "order_id", "value": "ORDER-28168441", "type": "path", "description": "The order ID." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"decision_id\": \"block_order_payment_abuse\",\n  \"source\": \"AUTOMATED_RULE\"\n}" }
+          },
+          "docs": "Applies a decision to a specific order belonging to a user."
+        },
+        {
+          "info": { "name": "Apply a decision to a session", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v3/accounts/:account_id/users/:user_id/sessions/:session_id/decisions",
+            "params": [
+              { "name": "account_id", "value": "{{accountId}}", "type": "path", "description": "Your numeric Sift Account ID." },
+              { "name": "user_id", "value": "billy_jones_301", "type": "path", "description": "The user ID." },
+              { "name": "session_id", "value": "SESSION-1234", "type": "path", "description": "The session ID." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"decision_id\": \"watch_session_ato\",\n  \"source\": \"AUTOMATED_RULE\"\n}" }
+          },
+          "docs": "Applies a decision to a specific session belonging to a user."
+        },
+        {
+          "info": { "name": "Apply a decision to content", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v3/accounts/:account_id/users/:user_id/content/:content_id/decisions",
+            "params": [
+              { "name": "account_id", "value": "{{accountId}}", "type": "path", "description": "Your numeric Sift Account ID." },
+              { "name": "user_id", "value": "billy_jones_301", "type": "path", "description": "The user ID." },
+              { "name": "content_id", "value": "CONTENT-9012", "type": "path", "description": "The content ID." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"decision_id\": \"block_content_content_abuse\",\n  \"source\": \"MANUAL_REVIEW\",\n  \"analyst\": \"analyst@example.com\"\n}" }
+          },
+          "docs": "Applies a decision to a specific piece of content created by a user."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Workflows", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get a workflow run status", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v3/accounts/:account_id/workflows/runs/:run_id",
+            "params": [
+              { "name": "account_id", "value": "{{accountId}}", "type": "path", "description": "Your numeric Sift Account ID." },
+              { "name": "run_id", "value": "", "type": "path", "description": "The workflow run ID." }
+            ]
+          },
+          "docs": "Retrieves the status and applied decisions of a Sift Workflow run."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Verification", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Send a verification code", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v1/verification/send",
+            "body": { "type": "json", "data": "{\n  \"$user_id\": \"billy_jones_301\",\n  \"send_to\": \"billy@example.com\",\n  \"verification_type\": \"$email\",\n  \"brand_name\": \"ACME\",\n  \"language\": \"en\",\n  \"event\": {\n    \"$session_id\": \"SESSION-1234\",\n    \"$verified_event\": \"$login\"\n  }\n}" }
+          },
+          "docs": "Triggers generation and delivery of a one-time passcode (OTP) to a user."
+        },
+        {
+          "info": { "name": "Resend a verification code", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v1/verification/resend",
+            "body": { "type": "json", "data": "{\n  \"$user_id\": \"billy_jones_301\",\n  \"verified_event\": \"$login\"\n}" }
+          },
+          "docs": "Requests a new one-time passcode for a pending verification."
+        },
+        {
+          "info": { "name": "Check a verification code", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v1/verification/check",
+            "body": { "type": "json", "data": "{\n  \"$user_id\": \"billy_jones_301\",\n  \"$code\": 123456,\n  \"verified_event\": \"$login\"\n}" }
+          },
+          "docs": "Validates the one-time passcode provided by the user."
+        }
+      ]
+    },
+    {
+      "info": { "name": "PSP Merchant Management", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List PSP merchants", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v3/accounts/:account_id/psp_management/merchants?batch_size=100",
+            "params": [
+              { "name": "account_id", "value": "{{accountId}}", "type": "path", "description": "Your numeric Sift Account ID." },
+              { "name": "batch_size", "value": "100", "type": "query", "description": "Page size." }
+            ]
+          },
+          "docs": "Lists sub-merchant profiles for an account, paginated."
+        },
+        {
+          "info": { "name": "Create a PSP merchant", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v3/accounts/:account_id/psp_management/merchants",
+            "params": [
+              { "name": "account_id", "value": "{{accountId}}", "type": "path", "description": "Your numeric Sift Account ID." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"id\": \"merchant-01\",\n  \"name\": \"Acme Marketplace Seller\",\n  \"description\": \"Electronics reseller\",\n  \"status\": \"active\"\n}" }
+          },
+          "docs": "Creates a new sub-merchant profile under an account."
+        },
+        {
+          "info": { "name": "Get a PSP merchant", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v3/accounts/:account_id/psp_management/merchants/:merchant_id",
+            "params": [
+              { "name": "account_id", "value": "{{accountId}}", "type": "path", "description": "Your numeric Sift Account ID." },
+              { "name": "merchant_id", "value": "merchant-01", "type": "path", "description": "The merchant ID." }
+            ]
+          },
+          "docs": "Retrieves a specific sub-merchant profile."
+        },
+        {
+          "info": { "name": "Update a PSP merchant", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sift.com/v3/accounts/:account_id/psp_management/merchants/:merchant_id",
+            "params": [
+              { "name": "account_id", "value": "{{accountId}}", "type": "path", "description": "Your numeric Sift Account ID." },
+              { "name": "merchant_id", "value": "merchant-01", "type": "path", "description": "The merchant ID." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"id\": \"merchant-01\",\n  \"name\": \"Acme Marketplace Seller\",\n  \"status\": \"inactive\"\n}" }
+          },
+          "docs": "Updates an existing sub-merchant profile."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

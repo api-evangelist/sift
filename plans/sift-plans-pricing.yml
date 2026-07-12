@@ -1,0 +1,105 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Sift
+providerId: sift
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Fraud Detection
+- Trust and Safety
+- Machine Learning
+- Plans
+description: >-
+  Sift is a commercial, sales-led B2B platform and does not publish public,
+  self-serve pricing tiers or rate cards. Pricing is custom and quoted per
+  customer, typically scoped by the products enabled (Payment Protection, Account
+  Defense covering Account Abuse and Account Takeover, Content Integrity, Dispute
+  Management, and add-ons such as PSP Merchant Management and Verification) and by
+  volume (events / transactions / users assessed). Access and API credentials are
+  provisioned during onboarding. The plan entries below are structural
+  placeholders derived from Sift's published product packaging, not reconciled
+  prices - all monetary values are "contact sales".
+notes: >-
+  No public per-unit or tier pricing is documented as of the review date. Verify
+  packaging and any usage-based components directly with Sift during procurement.
+  Sift has historically offered a limited free trial / evaluation, but terms are
+  not publicly guaranteed and should be confirmed with sales.
+sources:
+- https://sift.com/pricing
+- https://sift.com/platform
+- https://developers.sift.com/docs
+plans:
+- id: sift-evaluation
+  name: Evaluation / Trial
+  type: trial
+  description: >-
+    Time- or volume-limited evaluation access sometimes offered by Sift for
+    proof-of-concept integrations. Availability and terms are not publicly
+    guaranteed; confirm with sales.
+  entries:
+  - label: Evaluation Access
+    name: evaluation_access
+    type: usage
+    metric: events
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Events API
+  - name: Score API
+  - name: Console Access
+- id: sift-platform
+  name: Sift Platform (Custom)
+  type: enterprise
+  description: >-
+    Production access to Sift's trust and safety products, packaged by product
+    line and priced on volume. Includes the REST APIs, Workflows, Decisions,
+    console, and analytics. Priced custom.
+  entries:
+  - label: Custom Volume Agreement
+    name: custom_volume
+    type: usage
+    metric: events
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales (volume-based)
+    userMultiplied: false
+  elements:
+  - name: Payment Protection
+  - name: Account Defense (Account Abuse and Account Takeover)
+  - name: Content Integrity
+  - name: Dispute Management
+  - name: Workflows and Decisions
+  - name: Events, Score, and Decisions APIs
+- id: sift-addons
+  name: Add-On Products
+  type: enterprise
+  description: >-
+    Optional products layered onto a Sift agreement, including PSP Merchant
+    Management for payment service providers and Verification (OTP step-up).
+    Priced custom.
+  entries:
+  - label: Add-On Agreement
+    name: addon_agreement
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: PSP Merchant Management API
+  - name: Verification API
+  - name: Premium Support and SLAs
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,59 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Sift
+providerId: sift
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Fraud Detection
+- Trust and Safety
+- Rate Limiting
+- Quotas
+description: >-
+  Sift does not publish fixed numeric public rate limits for its REST APIs.
+  Throughput is governed by your commercial agreement (contracted event / request
+  volume) rather than a documented per-minute request cap. Sift's client
+  libraries and documentation indicate that requests may be throttled under load,
+  and clients should handle 429 (Too Many Requests) and 5xx responses with
+  exponential backoff and retries. The synchronous Score path (Events API with
+  return_score=true, or the Score API) is the most latency- and volume-sensitive
+  surface and should be batched or rate-managed on the client side.
+notes: >-
+  Numeric per-account or per-endpoint limits are not documented as of the review
+  date. Confirm any contractual QPS or monthly volume ceilings with Sift. The
+  values below are modeled from general REST behavior and Sift's client-library
+  retry guidance, not from a published limits table.
+sources:
+- https://developers.sift.com/docs/curl/apis-overview
+- https://github.com/SiftScience/sift-python
+- https://sift.com/pricing
+responseCodes:
+  throttled: 429
+limits:
+- name: REST API Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented; governed by contract volume.
+- name: Synchronous Scoring
+  scope: account
+  metric: requests
+  limit: not published
+  notes: Events API with return_score=true and the Score API are latency-sensitive; manage concurrency client-side.
+- name: Contracted Event Volume
+  scope: account
+  metric: events
+  limit: per agreement
+  notes: Monthly event / transaction / user assessment volume is set by the commercial agreement.
+policies:
+- name: Backoff Strategy
+  description: On 429 or 5xx responses, retry with exponential backoff and jitter, as implemented in Sift's official client libraries.
+- name: Idempotency
+  description: Events carry a client-supplied identity; resending the same event is used to correct or update prior data rather than being rejected as a duplicate.
+- name: Client-Side Throttling
+  description: High-volume ingestion should be batched and rate-managed by the client, since Sift does not publish a hard public QPS cap.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
