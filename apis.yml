@@ -150,6 +150,8 @@ apis:
     and retrieve sub-merchant profiles under an account so Sift can monitor merchant
     onboarding and transaction risk across a payments portfolio.
 common:
+- type: AgenticAccess
+  url: agentic-access/sift-agentic-access.yml
 - type: DomainSecurity
   url: security/sift-domain-security.yml
 - type: Authentication
