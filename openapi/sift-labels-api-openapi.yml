@@ -1,0 +1,192 @@
+openapi: 3.0.3
+info:
+  title: Sift Decisions Labels API
+  description: 'Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse. This definition covers Sift''s public REST APIs: the Events API (stream user activity), the Score API (real-time Sift Scores 0-100 per abuse type), the Decisions API (apply/retrieve accept/watch/block decisions), the Workflow Status API, the legacy Labels API, the Verification API (OTP step-up), and the PSP Merchant Management API.
+
+
+    MODELED SPECIFICATION - IMPORTANT: Sift does not publish a single machine-readable OpenAPI document. This file was MODELED by API Evangelist from Sift''s public developer documentation (developers.sift.com) and its officially maintained open-source client libraries (sift-python, sift-ruby, sift-java), which encode the exact paths, HTTP methods, and per-API versions. Endpoint paths, methods, versions, and authentication are confirmed against those sources. Request and response bodies are REPRESENTATIVE: Sift documents example payloads and field dictionaries rather than full JSON Schemas for most resources, so the schema shapes here are modeled from documented examples and may not enumerate every optional field. See review.yml for the confirmed-vs-modeled breakdown.
+
+
+    Versioning is per API family: Events, Score, and Labels are on v205; Decisions, Workflows, and PSP Merchant Management are on v3; Verification is on v1.'
+  version: '2026-07-12'
+  contact:
+    name: Sift Developer Documentation
+    url: https://developers.sift.com/docs
+  x-modeled: true
+  x-modeled-by: API Evangelist
+  x-modeled-sources:
+  - https://developers.sift.com/docs
+  - https://developers.sift.com/docs/curl/apis-overview
+  - https://github.com/SiftScience/sift-python
+servers:
+- url: https://api.sift.com
+  description: Sift production API (single public host)
+security:
+- apiKeyBasic: []
+tags:
+- name: Labels
+  description: Legacy API for labeling users to train models.
+paths:
+  /v205/users/{user_id}/labels:
+    parameters:
+    - $ref: '#/components/parameters/UserId'
+    post:
+      operationId: applyLabel
+      tags:
+      - Labels
+      summary: Apply a label (legacy)
+      description: Labels a user as good or bad for a given abuse type to train Sift's models. Legacy - Sift recommends the Decisions API for new integrations.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Label'
+      responses:
+        '200':
+          description: The label was accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: removeLabel
+      tags:
+      - Labels
+      summary: Remove a label (legacy)
+      description: Removes a previously applied label from a user.
+      parameters:
+      - name: abuse_type
+        in: query
+        required: false
+        description: The abuse type of the label to remove.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The label was removed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    EventResponse:
+      type: object
+      description: Modeled response envelope for event and label ingestion.
+      properties:
+        status:
+          type: integer
+          description: 0 indicates the event was accepted.
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
+        request:
+          type: string
+        score_response:
+          $ref: '#/components/schemas/ScoreResponse'
+    Label:
+      type: object
+      description: Legacy label payload (modeled from documented examples).
+      required:
+      - $api_key
+      - $is_bad
+      - $abuse_type
+      properties:
+        $api_key:
+          type: string
+        $is_bad:
+          type: boolean
+          description: true labels the user as bad (fraudulent) for the abuse type.
+        $abuse_type:
+          type: string
+          enum:
+          - payment_abuse
+          - account_abuse
+          - account_takeover
+          - content_abuse
+          - promotion_abuse
+          - legacy
+        $description:
+          type: string
+        $source:
+          type: string
+        $analyst:
+          type: string
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
+    ScoreResponse:
+      type: object
+      description: Sift Score response (modeled). Scores range 0-100; higher is riskier. The scores object is keyed by abuse type, each carrying a score and reason codes.
+      properties:
+        status:
+          type: integer
+        error_message:
+          type: string
+        user_id:
+          type: string
+        scores:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AbuseScore'
+          description: Keyed by abuse type - payment_abuse, account_abuse, account_takeover, content_abuse, promotion_abuse.
+        latest_labels:
+          type: object
+          additionalProperties: true
+    AbuseScore:
+      type: object
+      properties:
+        score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Score expressed 0-1 in the API payload; presented as 0-100 in the console.
+        reasons:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+              details:
+                type: object
+                additionalProperties: true
+  parameters:
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      description: The unique identifier for the user, URL-encoded.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  securitySchemes:
+    apiKeyBasic:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication using your Sift REST API key as the username and an empty password. Ingestion APIs (Events, Score, Labels) also accept the key as $api_key in the JSON request body. Account-scoped APIs (Decisions, Workflows, PSP Merchant Management) require your numeric Account ID in the path in addition to the API key.

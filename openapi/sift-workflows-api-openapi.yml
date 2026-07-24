@@ -1,0 +1,119 @@
+openapi: 3.0.3
+info:
+  title: Sift Decisions Workflows API
+  description: 'Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse. This definition covers Sift''s public REST APIs: the Events API (stream user activity), the Score API (real-time Sift Scores 0-100 per abuse type), the Decisions API (apply/retrieve accept/watch/block decisions), the Workflow Status API, the legacy Labels API, the Verification API (OTP step-up), and the PSP Merchant Management API.
+
+
+    MODELED SPECIFICATION - IMPORTANT: Sift does not publish a single machine-readable OpenAPI document. This file was MODELED by API Evangelist from Sift''s public developer documentation (developers.sift.com) and its officially maintained open-source client libraries (sift-python, sift-ruby, sift-java), which encode the exact paths, HTTP methods, and per-API versions. Endpoint paths, methods, versions, and authentication are confirmed against those sources. Request and response bodies are REPRESENTATIVE: Sift documents example payloads and field dictionaries rather than full JSON Schemas for most resources, so the schema shapes here are modeled from documented examples and may not enumerate every optional field. See review.yml for the confirmed-vs-modeled breakdown.
+
+
+    Versioning is per API family: Events, Score, and Labels are on v205; Decisions, Workflows, and PSP Merchant Management are on v3; Verification is on v1.'
+  version: '2026-07-12'
+  contact:
+    name: Sift Developer Documentation
+    url: https://developers.sift.com/docs
+  x-modeled: true
+  x-modeled-by: API Evangelist
+  x-modeled-sources:
+  - https://developers.sift.com/docs
+  - https://developers.sift.com/docs/curl/apis-overview
+  - https://github.com/SiftScience/sift-python
+servers:
+- url: https://api.sift.com
+  description: Sift production API (single public host)
+security:
+- apiKeyBasic: []
+tags:
+- name: Workflows
+  description: Retrieve the status and results of Sift Workflow runs.
+paths:
+  /v3/accounts/{account_id}/workflows/runs/{run_id}:
+    parameters:
+    - $ref: '#/components/parameters/AccountId'
+    - name: run_id
+      in: path
+      required: true
+      description: The ID of the workflow run.
+      schema:
+        type: string
+    get:
+      operationId: getWorkflowRun
+      tags:
+      - Workflows
+      summary: Get a workflow run status
+      description: Retrieves the status and applied decisions of a Sift Workflow run.
+      responses:
+        '200':
+          description: The workflow run status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowRun'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    WorkflowRun:
+      type: object
+      description: Workflow run status (modeled).
+      properties:
+        id:
+          type: string
+        state:
+          type: string
+          enum:
+          - running
+          - finished
+          - failed
+        entity:
+          type: object
+          properties:
+            id:
+              type: string
+            type:
+              type: string
+        history:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    AccountId:
+      name: account_id
+      in: path
+      required: true
+      description: Your numeric Sift Account ID.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyBasic:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication using your Sift REST API key as the username and an empty password. Ingestion APIs (Events, Score, Labels) also accept the key as $api_key in the JSON request body. Account-scoped APIs (Decisions, Workflows, PSP Merchant Management) require your numeric Account ID in the path in addition to the API key.

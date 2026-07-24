@@ -1,0 +1,191 @@
+openapi: 3.0.3
+info:
+  title: Sift Decisions Events API
+  description: 'Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse. This definition covers Sift''s public REST APIs: the Events API (stream user activity), the Score API (real-time Sift Scores 0-100 per abuse type), the Decisions API (apply/retrieve accept/watch/block decisions), the Workflow Status API, the legacy Labels API, the Verification API (OTP step-up), and the PSP Merchant Management API.
+
+
+    MODELED SPECIFICATION - IMPORTANT: Sift does not publish a single machine-readable OpenAPI document. This file was MODELED by API Evangelist from Sift''s public developer documentation (developers.sift.com) and its officially maintained open-source client libraries (sift-python, sift-ruby, sift-java), which encode the exact paths, HTTP methods, and per-API versions. Endpoint paths, methods, versions, and authentication are confirmed against those sources. Request and response bodies are REPRESENTATIVE: Sift documents example payloads and field dictionaries rather than full JSON Schemas for most resources, so the schema shapes here are modeled from documented examples and may not enumerate every optional field. See review.yml for the confirmed-vs-modeled breakdown.
+
+
+    Versioning is per API family: Events, Score, and Labels are on v205; Decisions, Workflows, and PSP Merchant Management are on v3; Verification is on v1.'
+  version: '2026-07-12'
+  contact:
+    name: Sift Developer Documentation
+    url: https://developers.sift.com/docs
+  x-modeled: true
+  x-modeled-by: API Evangelist
+  x-modeled-sources:
+  - https://developers.sift.com/docs
+  - https://developers.sift.com/docs/curl/apis-overview
+  - https://github.com/SiftScience/sift-python
+servers:
+- url: https://api.sift.com
+  description: Sift production API (single public host)
+security:
+- apiKeyBasic: []
+tags:
+- name: Events
+  description: Stream user activity to Sift's machine learning models.
+paths:
+  /v205/events:
+    post:
+      operationId: postEvent
+      tags:
+      - Events
+      summary: Send an event
+      description: Records a user event (reserved types are prefixed with $, e.g. $create_account, $login, $create_order, $transaction, $chargeback, $content_status, plus custom events) so Sift can update its models. Set return_score=true to receive a Sift Score inline, or return_workflow_status=true to receive workflow decisions. The API key is supplied as $api_key in the body or via HTTP Basic auth.
+      parameters:
+      - name: return_score
+        in: query
+        required: false
+        description: Return the user's Sift Score inline with the event response.
+        schema:
+          type: boolean
+      - name: return_action
+        in: query
+        required: false
+        description: Return actions triggered by the event.
+        schema:
+          type: boolean
+      - name: return_workflow_status
+        in: query
+        required: false
+        description: Return the status and decisions of any workflow run triggered by the event.
+        schema:
+          type: boolean
+      - name: abuse_types
+        in: query
+        required: false
+        description: Comma-separated abuse types to score against when return_score is true.
+        schema:
+          type: string
+          example: payment_abuse,account_abuse,account_takeover
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '200':
+          description: The event was accepted. status 0 indicates success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    EventResponse:
+      type: object
+      description: Modeled response envelope for event and label ingestion.
+      properties:
+        status:
+          type: integer
+          description: 0 indicates the event was accepted.
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
+        request:
+          type: string
+        score_response:
+          $ref: '#/components/schemas/ScoreResponse'
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
+    ScoreResponse:
+      type: object
+      description: Sift Score response (modeled). Scores range 0-100; higher is riskier. The scores object is keyed by abuse type, each carrying a score and reason codes.
+      properties:
+        status:
+          type: integer
+        error_message:
+          type: string
+        user_id:
+          type: string
+        scores:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AbuseScore'
+          description: Keyed by abuse type - payment_abuse, account_abuse, account_takeover, content_abuse, promotion_abuse.
+        latest_labels:
+          type: object
+          additionalProperties: true
+    AbuseScore:
+      type: object
+      properties:
+        score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Score expressed 0-1 in the API payload; presented as 0-100 in the console.
+        reasons:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+              details:
+                type: object
+                additionalProperties: true
+    Event:
+      type: object
+      description: A Sift event. Reserved fields are prefixed with $ (for example $type, $user_id, $api_key). Reserved event types include $create_account, $update_account, $login, $create_order, $update_order, $transaction, $chargeback, $content_status, $create_content, and more; custom events use an unprefixed type. This schema is modeled from documented examples and shows common fields rather than the full field dictionary.
+      required:
+      - $type
+      - $api_key
+      properties:
+        $type:
+          type: string
+          description: The event type, e.g. $create_order or a custom type.
+          example: $create_order
+        $api_key:
+          type: string
+          description: Your Sift REST API key (may instead be supplied via HTTP Basic auth).
+        $user_id:
+          type: string
+          description: The user this event is associated with.
+        $session_id:
+          type: string
+        $order_id:
+          type: string
+        $user_email:
+          type: string
+        $ip:
+          type: string
+        $amount:
+          type: integer
+          format: int64
+          description: Amount in micros (1/1,000,000 of the base currency unit).
+        $currency_code:
+          type: string
+          example: USD
+      additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  securitySchemes:
+    apiKeyBasic:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication using your Sift REST API key as the username and an empty password. Ingestion APIs (Events, Score, Labels) also accept the key as $api_key in the JSON request body. Account-scoped APIs (Decisions, Workflows, PSP Merchant Management) require your numeric Account ID in the path in addition to the API key.

@@ -1,0 +1,346 @@
+openapi: 3.0.3
+info:
+  title: Sift Decisions API
+  description: 'Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse. This definition covers Sift''s public REST APIs: the Events API (stream user activity), the Score API (real-time Sift Scores 0-100 per abuse type), the Decisions API (apply/retrieve accept/watch/block decisions), the Workflow Status API, the legacy Labels API, the Verification API (OTP step-up), and the PSP Merchant Management API.
+
+
+    MODELED SPECIFICATION - IMPORTANT: Sift does not publish a single machine-readable OpenAPI document. This file was MODELED by API Evangelist from Sift''s public developer documentation (developers.sift.com) and its officially maintained open-source client libraries (sift-python, sift-ruby, sift-java), which encode the exact paths, HTTP methods, and per-API versions. Endpoint paths, methods, versions, and authentication are confirmed against those sources. Request and response bodies are REPRESENTATIVE: Sift documents example payloads and field dictionaries rather than full JSON Schemas for most resources, so the schema shapes here are modeled from documented examples and may not enumerate every optional field. See review.yml for the confirmed-vs-modeled breakdown.
+
+
+    Versioning is per API family: Events, Score, and Labels are on v205; Decisions, Workflows, and PSP Merchant Management are on v3; Verification is on v1.'
+  version: '2026-07-12'
+  contact:
+    name: Sift Developer Documentation
+    url: https://developers.sift.com/docs
+  x-modeled: true
+  x-modeled-by: API Evangelist
+  x-modeled-sources:
+  - https://developers.sift.com/docs
+  - https://developers.sift.com/docs/curl/apis-overview
+  - https://github.com/SiftScience/sift-python
+servers:
+- url: https://api.sift.com
+  description: Sift production API (single public host)
+security:
+- apiKeyBasic: []
+tags:
+- name: Decisions
+  description: Apply and retrieve decisions against users, orders, sessions, and content.
+paths:
+  /v3/accounts/{account_id}/decisions:
+    parameters:
+    - $ref: '#/components/parameters/AccountId'
+    get:
+      operationId: listDecisions
+      tags:
+      - Decisions
+      summary: List configured decisions
+      description: Lists the decisions configured for an account, optionally filtered by entity type and abuse type.
+      parameters:
+      - name: entity_type
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - user
+          - order
+          - session
+          - content
+      - name: abuse_types
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of configured decisions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v3/accounts/{account_id}/users/{user_id}/decisions:
+    parameters:
+    - $ref: '#/components/parameters/AccountId'
+    - $ref: '#/components/parameters/UserId'
+    get:
+      operationId: getUserDecisions
+      tags:
+      - Decisions
+      summary: Get decision status for a user
+      description: Retrieves the latest decisions applied to a user, per abuse type.
+      responses:
+        '200':
+          description: The user's current decision status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionStatus'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: applyUserDecision
+      tags:
+      - Decisions
+      summary: Apply a decision to a user
+      description: Applies a decision (accept, watch, block) to a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionRequest'
+      responses:
+        '200':
+          description: The decision was applied.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionApplyResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v3/accounts/{account_id}/users/{user_id}/orders/{order_id}/decisions:
+    parameters:
+    - $ref: '#/components/parameters/AccountId'
+    - $ref: '#/components/parameters/UserId'
+    - $ref: '#/components/parameters/OrderId'
+    post:
+      operationId: applyOrderDecision
+      tags:
+      - Decisions
+      summary: Apply a decision to an order
+      description: Applies a decision to a specific order belonging to a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionRequest'
+      responses:
+        '200':
+          description: The decision was applied.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionApplyResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v3/accounts/{account_id}/users/{user_id}/sessions/{session_id}/decisions:
+    parameters:
+    - $ref: '#/components/parameters/AccountId'
+    - $ref: '#/components/parameters/UserId'
+    - $ref: '#/components/parameters/SessionId'
+    post:
+      operationId: applySessionDecision
+      tags:
+      - Decisions
+      summary: Apply a decision to a session
+      description: Applies a decision to a specific session belonging to a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionRequest'
+      responses:
+        '200':
+          description: The decision was applied.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionApplyResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v3/accounts/{account_id}/users/{user_id}/content/{content_id}/decisions:
+    parameters:
+    - $ref: '#/components/parameters/AccountId'
+    - $ref: '#/components/parameters/UserId'
+    - $ref: '#/components/parameters/ContentId'
+    post:
+      operationId: applyContentDecision
+      tags:
+      - Decisions
+      summary: Apply a decision to content
+      description: Applies a decision to a specific piece of content created by a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionRequest'
+      responses:
+        '200':
+          description: The decision was applied.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionApplyResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Decision:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        entity_type:
+          type: string
+          enum:
+          - user
+          - order
+          - session
+          - content
+        abuse_type:
+          type: string
+        category:
+          type: string
+          enum:
+          - block
+          - watch
+          - accept
+    DecisionList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Decision'
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
+    DecisionRequest:
+      type: object
+      description: Request to apply a decision to an entity (modeled from documented examples).
+      required:
+      - decision_id
+      - source
+      properties:
+        decision_id:
+          type: string
+          description: The ID of a decision configured in the Sift console.
+          example: block_user_payment_abuse
+        source:
+          type: string
+          enum:
+          - MANUAL_REVIEW
+          - AUTOMATED_RULE
+          - CHARGEBACK
+          description: What produced the decision.
+        analyst:
+          type: string
+          description: Identifier (e.g. email) of the analyst, required when source is MANUAL_REVIEW.
+        description:
+          type: string
+        time:
+          type: integer
+          format: int64
+          description: Epoch milliseconds the decision was made.
+    DecisionStatus:
+      type: object
+      description: The latest decisions applied to an entity, keyed by abuse type.
+      properties:
+        decisions:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              decision:
+                type: object
+                properties:
+                  id:
+                    type: string
+              time:
+                type: integer
+                format: int64
+              webhook_succeeded:
+                type: boolean
+    DecisionApplyResponse:
+      type: object
+      properties:
+        entity:
+          type: object
+          properties:
+            id:
+              type: string
+            type:
+              type: string
+        decision:
+          type: object
+          properties:
+            id:
+              type: string
+        time:
+          type: integer
+          format: int64
+  parameters:
+    ContentId:
+      name: content_id
+      in: path
+      required: true
+      description: The unique identifier for the content, URL-encoded.
+      schema:
+        type: string
+    OrderId:
+      name: order_id
+      in: path
+      required: true
+      description: The unique identifier for the order, URL-encoded.
+      schema:
+        type: string
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      description: The unique identifier for the user, URL-encoded.
+      schema:
+        type: string
+    AccountId:
+      name: account_id
+      in: path
+      required: true
+      description: Your numeric Sift Account ID.
+      schema:
+        type: string
+    SessionId:
+      name: session_id
+      in: path
+      required: true
+      description: The unique identifier for the session, URL-encoded.
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  securitySchemes:
+    apiKeyBasic:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication using your Sift REST API key as the username and an empty password. Ingestion APIs (Events, Score, Labels) also accept the key as $api_key in the JSON request body. Account-scoped APIs (Decisions, Workflows, PSP Merchant Management) require your numeric Account ID in the path in addition to the API key.
