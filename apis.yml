@@ -9,7 +9,20 @@ description: Sift is a digital trust and safety platform that uses machine learn
   and act on them through the Decisions API, automated Workflows, verification (OTP),
   and PSP merchant risk management. Sift exposes a documented public REST API over
   HTTPS at https://api.sift.com with API-key authentication.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sift.png
 tags:
 - Fraud Detection
 - Fraud Prevention
@@ -24,131 +37,188 @@ created: '2026-07-12'
 modified: '2026-07-12'
 specificationVersion: '0.19'
 apis:
-- aid: sift:sift-events-api
-  name: Sift Events API
-  tags:
-  - Events
-  - Fraud Detection
-  - Machine Learning
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.sift.com/docs/curl/events-api/overview
-  baseURL: https://api.sift.com
-  properties:
-  - url: https://developers.sift.com/docs/curl/events-api/overview
-    type: Documentation
-  - url: https://developers.sift.com/docs/curl/apis-overview
-    type: APIReference
-  - url: openapi/sift-openapi.yml
-    type: OpenAPI
-  description: Streams user activity - account creation, logins, orders, transactions,
-    content, chargebacks, and more - to Sift's machine learning models via POST
-    /v205/events. Supports both reserved event types (prefixed with $) and custom
-    events, and can return a real-time Sift Score inline with return_score=true.
-- aid: sift:sift-score-api
-  name: Sift Score API
-  tags:
-  - Risk
-  - Score
-  - Fraud Detection
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.sift.com/docs/curl/score-api/overview
-  baseURL: https://api.sift.com
-  properties:
-  - url: https://developers.sift.com/docs/curl/score-api/overview
-    type: Documentation
-  - url: openapi/sift-openapi.yml
-    type: OpenAPI
-  description: Retrieves a user's real-time Sift Score (0-100, higher is riskier)
-    per abuse type - payment_abuse, account_abuse, account_takeover, content_abuse,
-    and promotion_abuse - along with reason codes. Includes synchronous score
-    endpoints that fetch the latest score or rescore a user on demand.
 - aid: sift:sift-decisions-api
   name: Sift Decisions API
+  description: Apply and retrieve decisions against users, orders, sessions, and content.
+  humanURL: https://developers.sift.com/docs/curl/events-api/overview
+  baseURL: https://api.sift.com
   tags:
   - Decisions
-  - Trust and Safety
-  - Workflow
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.sift.com/docs/curl/decisions-api/overview
-  baseURL: https://api.sift.com
   properties:
-  - url: https://developers.sift.com/docs/curl/decisions-api/overview
-    type: Documentation
-  - url: openapi/sift-openapi.yml
-    type: OpenAPI
-  description: Applies and retrieves decisions (accept, watch, block) against Sift
-    entities - users, orders, sessions, and content - scoped to an account. Decisions
-    record the outcome of manual or automated review, feed Sift's models, and trigger
-    downstream webhooks. The modern replacement for the legacy Labels API.
-- aid: sift:sift-workflow-status-api
-  name: Sift Workflow Status API
+  - type: OpenAPI
+    url: openapi/sift-decisions-api-openapi.yml
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/events-api/overview
+  - type: APIReference
+    url: https://developers.sift.com/docs/curl/apis-overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/score-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/decisions-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/workflows-api/workflow-decisions
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/labels-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/verification-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/psp-merchant-management-api/overview
+- aid: sift:sift-events-api
+  name: Sift Events API
+  description: Stream user activity to Sift's machine learning models.
+  humanURL: https://developers.sift.com/docs/curl/events-api/overview
+  baseURL: https://api.sift.com
   tags:
-  - Workflow
-  - Automation
-  - Decisions
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.sift.com/docs/curl/workflows-api/workflow-decisions
-  baseURL: https://api.sift.com
+  - Events
   properties:
-  - url: https://developers.sift.com/docs/curl/workflows-api/workflow-decisions
-    type: Documentation
-  - url: openapi/sift-openapi.yml
-    type: OpenAPI
-  description: Retrieves the status and results of a Sift Workflow run by run_id,
-    including the decisions a workflow applied to an entity. Workflows automate
-    scoring, routing, and decisioning based on Sift Scores and business rules.
+  - type: OpenAPI
+    url: openapi/sift-events-api-openapi.yml
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/events-api/overview
+  - type: APIReference
+    url: https://developers.sift.com/docs/curl/apis-overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/score-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/decisions-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/workflows-api/workflow-decisions
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/labels-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/verification-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/psp-merchant-management-api/overview
 - aid: sift:sift-labels-api
   name: Sift Labels API
+  description: Legacy API for labeling users to train models.
+  humanURL: https://developers.sift.com/docs/curl/events-api/overview
+  baseURL: https://api.sift.com
   tags:
   - Labels
-  - Training
-  - Legacy
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.sift.com/docs/curl/labels-api/overview
-  baseURL: https://api.sift.com
   properties:
-  - url: https://developers.sift.com/docs/curl/labels-api/overview
-    type: Documentation
-  - url: openapi/sift-openapi.yml
-    type: OpenAPI
-  description: Legacy API for labeling a user as good or bad for a given abuse type
-    to train Sift's models via POST and DELETE /v205/users/{user_id}/labels. Sift
-    recommends the Decisions API for new integrations; Labels remain documented for
-    backfilling historical fraud outcomes.
-- aid: sift:sift-verification-api
-  name: Sift Verification API
-  tags:
-  - Verification
-  - OTP
-  - Account Takeover
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.sift.com/docs/curl/verification-api/overview
-  baseURL: https://api.sift.com
-  properties:
-  - url: https://developers.sift.com/docs/curl/verification-api/overview
-    type: Documentation
-  - url: openapi/sift-openapi.yml
-    type: OpenAPI
-  description: Step-up verification for high-risk actions. Sends, resends, and checks
-    one-time passcodes (OTP) via POST /v1/verification/send, /resend, and /check to
-    confirm a user's identity and mitigate account takeover.
+  - type: OpenAPI
+    url: openapi/sift-labels-api-openapi.yml
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/events-api/overview
+  - type: APIReference
+    url: https://developers.sift.com/docs/curl/apis-overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/score-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/decisions-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/workflows-api/workflow-decisions
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/labels-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/verification-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/psp-merchant-management-api/overview
 - aid: sift:sift-psp-merchant-management-api
   name: Sift PSP Merchant Management API
-  tags:
-  - PSP
-  - Payment Fraud
-  - Merchant Risk
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.sift.com/docs/curl/psp-merchant-management-api/overview
+  description: Manage sub-merchant profiles for payment service providers.
+  humanURL: https://developers.sift.com/docs/curl/events-api/overview
   baseURL: https://api.sift.com
+  tags:
+  - PSP Merchant Management
   properties:
-  - url: https://developers.sift.com/docs/curl/psp-merchant-management-api/overview
-    type: Documentation
-  - url: openapi/sift-openapi.yml
-    type: OpenAPI
-  description: For payment service providers and marketplaces - create, update, list,
-    and retrieve sub-merchant profiles under an account so Sift can monitor merchant
-    onboarding and transaction risk across a payments portfolio.
+  - type: OpenAPI
+    url: openapi/sift-psp-merchant-management-api-openapi.yml
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/events-api/overview
+  - type: APIReference
+    url: https://developers.sift.com/docs/curl/apis-overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/score-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/decisions-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/workflows-api/workflow-decisions
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/labels-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/verification-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/psp-merchant-management-api/overview
+- aid: sift:sift-score-api
+  name: Sift Score API
+  description: Retrieve real-time Sift Scores per abuse type.
+  humanURL: https://developers.sift.com/docs/curl/events-api/overview
+  baseURL: https://api.sift.com
+  tags:
+  - Score
+  properties:
+  - type: OpenAPI
+    url: openapi/sift-score-api-openapi.yml
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/events-api/overview
+  - type: APIReference
+    url: https://developers.sift.com/docs/curl/apis-overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/score-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/decisions-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/workflows-api/workflow-decisions
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/labels-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/verification-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/psp-merchant-management-api/overview
+- aid: sift:sift-verification-api
+  name: Sift Verification API
+  description: One-time passcode (OTP) step-up verification.
+  humanURL: https://developers.sift.com/docs/curl/events-api/overview
+  baseURL: https://api.sift.com
+  tags:
+  - Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/sift-verification-api-openapi.yml
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/events-api/overview
+  - type: APIReference
+    url: https://developers.sift.com/docs/curl/apis-overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/score-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/decisions-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/workflows-api/workflow-decisions
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/labels-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/verification-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/psp-merchant-management-api/overview
+- aid: sift:sift-workflows-api
+  name: Sift Workflows API
+  description: Retrieve the status and results of Sift Workflow runs.
+  humanURL: https://developers.sift.com/docs/curl/events-api/overview
+  baseURL: https://api.sift.com
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/sift-workflows-api-openapi.yml
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/events-api/overview
+  - type: APIReference
+    url: https://developers.sift.com/docs/curl/apis-overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/score-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/decisions-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/workflows-api/workflow-decisions
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/labels-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/verification-api/overview
+  - type: Documentation
+    url: https://developers.sift.com/docs/curl/psp-merchant-management-api/overview
 common:
 - type: AgenticAccess
   url: agentic-access/sift-agentic-access.yml
