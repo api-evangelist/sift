@@ -1,0 +1,26 @@
+{
+  "provider": "sift",
+  "sources": [
+    "sift-decisions-api-openapi.yml",
+    "sift-events-api-openapi.yml",
+    "sift-labels-api-openapi.yml",
+    "sift-psp-merchant-management-api-openapi.yml",
+    "sift-score-api-openapi.yml",
+    "sift-verification-api-openapi.yml",
+    "sift-workflows-api-openapi.yml"
+  ],
+  "outputs": [
+    "sift-decisions-api-openapi.yml",
+    "sift-events-api-openapi.yml",
+    "sift-labels-api-openapi.yml",
+    "sift-psp-merchant-management-api-openapi.yml",
+    "sift-score-api-openapi.yml",
+    "sift-verification-api-openapi.yml",
+    "sift-workflows-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
