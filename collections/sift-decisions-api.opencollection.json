@@ -1,0 +1,213 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sift Decisions API",
+    "version": "2026-07-12"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Decisions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List configured decisions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v3/accounts/:account_id/decisions",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Your numeric Sift Account ID."
+              },
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "abuse_types",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists the decisions configured for an account, optionally filtered by entity type and abuse type."
+        },
+        {
+          "info": {
+            "name": "Get decision status for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v3/accounts/:account_id/users/:user_id/decisions",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Your numeric Sift Account ID."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user, URL-encoded."
+              }
+            ]
+          },
+          "docs": "Retrieves the latest decisions applied to a user, per abuse type."
+        },
+        {
+          "info": {
+            "name": "Apply a decision to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v3/accounts/:account_id/users/:user_id/decisions",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Your numeric Sift Account ID."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user, URL-encoded."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Applies a decision (accept, watch, block) to a user."
+        },
+        {
+          "info": {
+            "name": "Apply a decision to an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v3/accounts/:account_id/users/:user_id/orders/:order_id/decisions",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Your numeric Sift Account ID."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user, URL-encoded."
+              },
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the order, URL-encoded."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Applies a decision to a specific order belonging to a user."
+        },
+        {
+          "info": {
+            "name": "Apply a decision to a session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v3/accounts/:account_id/users/:user_id/sessions/:session_id/decisions",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Your numeric Sift Account ID."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user, URL-encoded."
+              },
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the session, URL-encoded."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Applies a decision to a specific session belonging to a user."
+        },
+        {
+          "info": {
+            "name": "Apply a decision to content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v3/accounts/:account_id/users/:user_id/content/:content_id/decisions",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Your numeric Sift Account ID."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user, URL-encoded."
+              },
+              {
+                "name": "content_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the content, URL-encoded."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Applies a decision to a specific piece of content created by a user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sift Decisions Events API",
+    "version": "2026-07-12"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v205/events",
+            "params": [
+              {
+                "name": "return_score",
+                "value": "",
+                "type": "query",
+                "description": "Return the user's Sift Score inline with the event response."
+              },
+              {
+                "name": "return_action",
+                "value": "",
+                "type": "query",
+                "description": "Return actions triggered by the event."
+              },
+              {
+                "name": "return_workflow_status",
+                "value": "",
+                "type": "query",
+                "description": "Return the status and decisions of any workflow run triggered by the event."
+              },
+              {
+                "name": "abuse_types",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated abuse types to score against when return_score is true."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records a user event (reserved types are prefixed with $, e.g. $create_account, $login, $create_order, $transaction, $chargeback, $content_status, plus custom events) so Sift can update its models. Set return_score=true to receive a Sift Score inline, or return_workflow_status=true to receive workflow decisions. The API key is supplied as $api_key in the body or via HTTP Basic auth."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

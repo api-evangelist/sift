@@ -1,0 +1,942 @@
+{
+  "item": [
+    {
+      "id": "8b99e2bf-864e-4bda-8b0d-5d11c421a1f2",
+      "name": "PSP Merchant Management",
+      "description": {
+        "content": "Manage sub-merchant profiles for payment service providers.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "25af6d29-60bb-43e4-a3c0-9edb9bf67d11",
+          "name": "List PSP merchants",
+          "request": {
+            "name": "List PSP merchants",
+            "description": {
+              "content": "Lists sub-merchant profiles for an account, paginated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "accounts",
+                ":account_id",
+                "psp_management",
+                "merchants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "batch_size",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "batch_token",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) Your numeric Sift Account ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f2d9b313-650a-405a-b52d-d74f7dd2cd3b",
+              "name": "A paginated list of merchant profiles.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "accounts",
+                    ":account_id",
+                    "psp_management",
+                    "merchants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "batch_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "batch_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) Your numeric Sift Account ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"address\": {\n        \"key_0\": 260,\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"category\": \"string\",\n      \"service_level\": \"string\",\n      \"status\": \"inactive\",\n      \"risk_profile\": {\n        \"level\": \"string\",\n        \"score\": 835.6697988638817\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"address\": {\n        \"key_0\": 9923,\n        \"key_1\": \"string\",\n        \"key_2\": 2603\n      },\n      \"category\": \"string\",\n      \"service_level\": \"string\",\n      \"status\": \"inactive\",\n      \"risk_profile\": {\n        \"level\": \"string\",\n        \"score\": 1458.9118653543942\n      }\n    }\n  ],\n  \"has_more\": true,\n  \"next_ref\": \"string\",\n  \"total_results\": 3731\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc42ea69-8121-41b6-82e5-1470002958b1",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "accounts",
+                    ":account_id",
+                    "psp_management",
+                    "merchants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "batch_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "batch_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) Your numeric Sift Account ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 1237,\n  \"error_message\": \"string\",\n  \"time\": 8675\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6cb5dadd-81b3-425a-b748-e88e95da2335",
+          "name": "Create a PSP merchant",
+          "request": {
+            "name": "Create a PSP merchant",
+            "description": {
+              "content": "Creates a new sub-merchant profile under an account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "accounts",
+                ":account_id",
+                "psp_management",
+                "merchants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) Your numeric Sift Account ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"address\": {\n    \"key_0\": \"string\",\n    \"key_1\": 9155,\n    \"key_2\": false\n  },\n  \"category\": \"<string>\",\n  \"service_level\": \"<string>\",\n  \"status\": \"<string>\",\n  \"risk_profile\": {\n    \"level\": \"<string>\",\n    \"score\": \"<float>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4715b36b-8bf7-431b-b78a-f082528d4312",
+              "name": "The created merchant profile.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "accounts",
+                    ":account_id",
+                    "psp_management",
+                    "merchants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) Your numeric Sift Account ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"address\": {\n    \"key_0\": \"string\"\n  },\n  \"category\": \"<string>\",\n  \"service_level\": \"<string>\",\n  \"status\": \"<string>\",\n  \"risk_profile\": {\n    \"level\": \"<string>\",\n    \"score\": \"<float>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"address\": {\n    \"key_0\": \"string\"\n  },\n  \"category\": \"<string>\",\n  \"service_level\": \"<string>\",\n  \"status\": \"<string>\",\n  \"risk_profile\": {\n    \"level\": \"<string>\",\n    \"score\": \"<float>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6db4b56-07d1-4d5d-850a-96fdb9e1ad7a",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "accounts",
+                    ":account_id",
+                    "psp_management",
+                    "merchants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) Your numeric Sift Account ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"address\": {\n    \"key_0\": \"string\"\n  },\n  \"category\": \"<string>\",\n  \"service_level\": \"<string>\",\n  \"status\": \"<string>\",\n  \"risk_profile\": {\n    \"level\": \"<string>\",\n    \"score\": \"<float>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 1237,\n  \"error_message\": \"string\",\n  \"time\": 8675\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6411802-f764-4e49-9f2a-38bdf8c69dc7",
+          "name": "Get a PSP merchant",
+          "request": {
+            "name": "Get a PSP merchant",
+            "description": {
+              "content": "Retrieves a specific sub-merchant profile.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "accounts",
+                ":account_id",
+                "psp_management",
+                "merchants",
+                ":merchant_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) Your numeric Sift Account ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_id",
+                  "description": "(Required) The ID of the sub-merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3884ea48-0723-46f7-9f75-ad9c673aea18",
+              "name": "The merchant profile.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "accounts",
+                    ":account_id",
+                    "psp_management",
+                    "merchants",
+                    ":merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) Your numeric Sift Account ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) The ID of the sub-merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"address\": {\n    \"key_0\": \"string\"\n  },\n  \"category\": \"<string>\",\n  \"service_level\": \"<string>\",\n  \"status\": \"<string>\",\n  \"risk_profile\": {\n    \"level\": \"<string>\",\n    \"score\": \"<float>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19bd5184-8ca4-4307-b0dc-2b107cbce66f",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "accounts",
+                    ":account_id",
+                    "psp_management",
+                    "merchants",
+                    ":merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) Your numeric Sift Account ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) The ID of the sub-merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 1237,\n  \"error_message\": \"string\",\n  \"time\": 8675\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9125604-5023-4c09-b634-b58a66a1dfc7",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "accounts",
+                    ":account_id",
+                    "psp_management",
+                    "merchants",
+                    ":merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) Your numeric Sift Account ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) The ID of the sub-merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 1237,\n  \"error_message\": \"string\",\n  \"time\": 8675\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f853c81b-508e-4b03-8deb-b875cd30afa1",
+          "name": "Update a PSP merchant",
+          "request": {
+            "name": "Update a PSP merchant",
+            "description": {
+              "content": "Updates an existing sub-merchant profile.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "accounts",
+                ":account_id",
+                "psp_management",
+                "merchants",
+                ":merchant_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) Your numeric Sift Account ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_id",
+                  "description": "(Required) The ID of the sub-merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"address\": {\n    \"key_0\": \"string\",\n    \"key_1\": 9155,\n    \"key_2\": false\n  },\n  \"category\": \"<string>\",\n  \"service_level\": \"<string>\",\n  \"status\": \"<string>\",\n  \"risk_profile\": {\n    \"level\": \"<string>\",\n    \"score\": \"<float>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b3c8782a-62d4-47f0-b981-44f5ca4e97db",
+              "name": "The updated merchant profile.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "accounts",
+                    ":account_id",
+                    "psp_management",
+                    "merchants",
+                    ":merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) Your numeric Sift Account ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) The ID of the sub-merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"address\": {\n    \"key_0\": \"string\"\n  },\n  \"category\": \"<string>\",\n  \"service_level\": \"<string>\",\n  \"status\": \"<string>\",\n  \"risk_profile\": {\n    \"level\": \"<string>\",\n    \"score\": \"<float>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"address\": {\n    \"key_0\": \"string\"\n  },\n  \"category\": \"<string>\",\n  \"service_level\": \"<string>\",\n  \"status\": \"<string>\",\n  \"risk_profile\": {\n    \"level\": \"<string>\",\n    \"score\": \"<float>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85dc3d71-63dc-497e-99df-80f258f356e0",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "accounts",
+                    ":account_id",
+                    "psp_management",
+                    "merchants",
+                    ":merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) Your numeric Sift Account ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) The ID of the sub-merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"address\": {\n    \"key_0\": \"string\"\n  },\n  \"category\": \"<string>\",\n  \"service_level\": \"<string>\",\n  \"status\": \"<string>\",\n  \"risk_profile\": {\n    \"level\": \"<string>\",\n    \"score\": \"<float>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 1237,\n  \"error_message\": \"string\",\n  \"time\": 8675\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c729b93-5d35-4ccb-9860-d272c1c9db87",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "accounts",
+                    ":account_id",
+                    "psp_management",
+                    "merchants",
+                    ":merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) Your numeric Sift Account ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) The ID of the sub-merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"address\": {\n    \"key_0\": \"string\"\n  },\n  \"category\": \"<string>\",\n  \"service_level\": \"<string>\",\n  \"status\": \"<string>\",\n  \"risk_profile\": {\n    \"level\": \"<string>\",\n    \"score\": \"<float>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 1237,\n  \"error_message\": \"string\",\n  \"time\": 8675\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sift.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e5d316c8-0147-4272-9d94-54bc0a668369",
+    "name": "Sift Decisions PSP Merchant Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse. This definition covers Sift's public REST APIs: the Events API (stream user activity), the Score API (real-time Sift Scores 0-100 per abuse type), the Decisions API (apply/retrieve accept/watch/block decisions), the Workflow Status API, the legacy Labels API, the Verification API (OTP step-up), and the PSP Merchant Management API.\n\nMODELED SPECIFICATION - IMPORTANT: Sift does not publish a single machine-readable OpenAPI document. This file was MODELED by API Evangelist from Sift's public developer documentation (developers.sift.com) and its officially maintained open-source client libraries (sift-python, sift-ruby, sift-java), which encode the exact paths, HTTP methods, and per-API versions. Endpoint paths, methods, versions, and authentication are confirmed against those sources. Request and response bodies are REPRESENTATIVE: Sift documents example payloads and field dictionaries rather than full JSON Schemas for most resources, so the schema shapes here are modeled from documented examples and may not enumerate every optional field. See review.yml for the confirmed-vs-modeled breakdown.\n\nVersioning is per API family: Events, Score, and Labels are on v205; Decisions, Workflows, and PSP Merchant Management are on v3; Verification is on v1.\n\nContact Support:\n Name: Sift Developer Documentation",
+      "type": "text/plain"
+    }
+  }
+}

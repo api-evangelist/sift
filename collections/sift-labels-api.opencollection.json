@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sift Decisions Labels API",
+    "version": "2026-07-12"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Labels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apply a label (legacy)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v205/users/:user_id/labels",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user, URL-encoded."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Labels a user as good or bad for a given abuse type to train Sift's models. Legacy - Sift recommends the Decisions API for new integrations."
+        },
+        {
+          "info": {
+            "name": "Remove a label (legacy)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sift.com/v205/users/:user_id/labels",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user, URL-encoded."
+              },
+              {
+                "name": "abuse_type",
+                "value": "",
+                "type": "query",
+                "description": "The abuse type of the label to remove."
+              }
+            ]
+          },
+          "docs": "Removes a previously applied label from a user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

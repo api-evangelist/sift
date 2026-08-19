@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sift Decisions Workflows API",
+    "version": "2026-07-12"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workflows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a workflow run status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v3/accounts/:account_id/workflows/runs/:run_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Your numeric Sift Account ID."
+              },
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the workflow run."
+              }
+            ]
+          },
+          "docs": "Retrieves the status and applied decisions of a Sift Workflow run."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

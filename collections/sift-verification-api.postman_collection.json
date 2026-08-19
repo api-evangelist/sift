@@ -1,0 +1,513 @@
+{
+  "item": [
+    {
+      "id": "50ef0a5e-fa4d-4269-8252-2d350ea11f59",
+      "name": "Verification",
+      "description": {
+        "content": "One-time passcode (OTP) step-up verification.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "79ccc4b1-d15c-4937-b531-3bd1c0527483",
+          "name": "Send a verification code",
+          "request": {
+            "name": "Send a verification code",
+            "description": {
+              "content": "Triggers generation and delivery of a one-time passcode (OTP) to a user via a configured channel (for example email or SMS) as a step-up verification for a risky action.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "verification",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"$user_id\": \"<string>\",\n  \"event\": {\n    \"key_0\": 5878.403140083951\n  },\n  \"send_to\": \"<string>\",\n  \"verification_type\": \"<string>\",\n  \"brand_name\": \"<string>\",\n  \"language\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2042a060-d5c3-4161-bb79-4d1a51b15784",
+              "name": "The verification code was sent.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verification",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$user_id\": \"<string>\",\n  \"event\": {\n    \"key_0\": 159.7842030499086,\n    \"key_1\": 7834,\n    \"key_2\": 8439\n  },\n  \"send_to\": \"<string>\",\n  \"verification_type\": \"<string>\",\n  \"brand_name\": \"<string>\",\n  \"language\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 8743,\n  \"error_message\": \"string\",\n  \"sent_at\": 9147,\n  \"checked_at\": 747\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6a289c4-fa4b-4c49-ac36-a6a7ccb55d85",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verification",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$user_id\": \"<string>\",\n  \"event\": {\n    \"key_0\": 159.7842030499086,\n    \"key_1\": 7834,\n    \"key_2\": 8439\n  },\n  \"send_to\": \"<string>\",\n  \"verification_type\": \"<string>\",\n  \"brand_name\": \"<string>\",\n  \"language\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 7998,\n  \"error_message\": \"string\",\n  \"time\": 3176\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e23a3ab-7b12-455e-a7a7-c8dc23553218",
+          "name": "Resend a verification code",
+          "request": {
+            "name": "Resend a verification code",
+            "description": {
+              "content": "Requests a new one-time passcode for a pending verification.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "verification",
+                "resend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"$user_id\": \"<string>\",\n  \"verified_event\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "10936eac-1b75-439b-b28d-192071002215",
+              "name": "A new verification code was sent.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verification",
+                    "resend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$user_id\": \"<string>\",\n  \"verified_event\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 8743,\n  \"error_message\": \"string\",\n  \"sent_at\": 9147,\n  \"checked_at\": 747\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "058ce6d5-39b1-408f-9dcd-7814be9e3036",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verification",
+                    "resend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$user_id\": \"<string>\",\n  \"verified_event\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 7998,\n  \"error_message\": \"string\",\n  \"time\": 3176\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b50c9bc6-c9db-4bab-bc3e-2c62076896cc",
+          "name": "Check a verification code",
+          "request": {
+            "name": "Check a verification code",
+            "description": {
+              "content": "Validates the one-time passcode provided by the user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "verification",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"$user_id\": \"<string>\",\n  \"$code\": \"<integer>\",\n  \"verified_event\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "40a8c2e7-d0a4-42ae-8e4c-f18f911ec46f",
+              "name": "The verification check result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verification",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$user_id\": \"<string>\",\n  \"$code\": \"<integer>\",\n  \"verified_event\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 8743,\n  \"error_message\": \"string\",\n  \"sent_at\": 9147,\n  \"checked_at\": 747\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "932f0035-aabd-45e1-b2c3-08d05abb63e8",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verification",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$user_id\": \"<string>\",\n  \"$code\": \"<integer>\",\n  \"verified_event\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 7998,\n  \"error_message\": \"string\",\n  \"time\": 3176\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sift.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3f406555-3062-45ad-84b8-1e6b21caf7e2",
+    "name": "Sift Decisions Verification API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse. This definition covers Sift's public REST APIs: the Events API (stream user activity), the Score API (real-time Sift Scores 0-100 per abuse type), the Decisions API (apply/retrieve accept/watch/block decisions), the Workflow Status API, the legacy Labels API, the Verification API (OTP step-up), and the PSP Merchant Management API.\n\nMODELED SPECIFICATION - IMPORTANT: Sift does not publish a single machine-readable OpenAPI document. This file was MODELED by API Evangelist from Sift's public developer documentation (developers.sift.com) and its officially maintained open-source client libraries (sift-python, sift-ruby, sift-java), which encode the exact paths, HTTP methods, and per-API versions. Endpoint paths, methods, versions, and authentication are confirmed against those sources. Request and response bodies are REPRESENTATIVE: Sift documents example payloads and field dictionaries rather than full JSON Schemas for most resources, so the schema shapes here are modeled from documented examples and may not enumerate every optional field. See review.yml for the confirmed-vs-modeled breakdown.\n\nVersioning is per API family: Events, Score, and Labels are on v205; Decisions, Workflows, and PSP Merchant Management are on v3; Verification is on v1.\n\nContact Support:\n Name: Sift Developer Documentation",
+      "type": "text/plain"
+    }
+  }
+}

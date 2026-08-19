@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sift Decisions Score API",
+    "version": "2026-07-12"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Score",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a user's Sift Score",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v205/score/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user, URL-encoded."
+              },
+              {
+                "name": "abuse_types",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated abuse types to return scores for."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key, if not supplied via HTTP Basic auth."
+              }
+            ]
+          },
+          "docs": "Retrieves the current Sift Score(s) for a user. Scores range 0-100 (higher is riskier) and are returned per abuse type with reason codes."
+        },
+        {
+          "info": {
+            "name": "Get latest score (no recompute)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v205/users/:user_id/score",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user, URL-encoded."
+              },
+              {
+                "name": "abuse_types",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Fetches the latest previously computed Sift Score for a user without recomputing it."
+        },
+        {
+          "info": {
+            "name": "Rescore a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v205/users/:user_id/score",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user, URL-encoded."
+              },
+              {
+                "name": "abuse_types",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Recomputes and returns the Sift Score for a user for the specified abuse types."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

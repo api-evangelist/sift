@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sift Decisions PSP Merchant Management API",
+    "version": "2026-07-12"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "PSP Merchant Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List PSP merchants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v3/accounts/:account_id/psp_management/merchants",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Your numeric Sift Account ID."
+              },
+              {
+                "name": "batch_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "batch_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists sub-merchant profiles for an account, paginated."
+        },
+        {
+          "info": {
+            "name": "Create a PSP merchant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sift.com/v3/accounts/:account_id/psp_management/merchants",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Your numeric Sift Account ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new sub-merchant profile under an account."
+        },
+        {
+          "info": {
+            "name": "Get a PSP merchant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sift.com/v3/accounts/:account_id/psp_management/merchants/:merchant_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Your numeric Sift Account ID."
+              },
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sub-merchant."
+              }
+            ]
+          },
+          "docs": "Retrieves a specific sub-merchant profile."
+        },
+        {
+          "info": {
+            "name": "Update a PSP merchant",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sift.com/v3/accounts/:account_id/psp_management/merchants/:merchant_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Your numeric Sift Account ID."
+              },
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sub-merchant."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing sub-merchant profile."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

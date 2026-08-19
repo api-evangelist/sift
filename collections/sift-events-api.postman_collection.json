@@ -1,0 +1,257 @@
+{
+  "item": [
+    {
+      "id": "6082bef4-bb79-479a-835f-33277d125a38",
+      "name": "Events",
+      "description": {
+        "content": "Stream user activity to Sift's machine learning models.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "990de484-d9bd-45f2-a6cb-06e1d6b2e664",
+          "name": "Send an event",
+          "request": {
+            "name": "Send an event",
+            "description": {
+              "content": "Records a user event (reserved types are prefixed with $, e.g. $create_account, $login, $create_order, $transaction, $chargeback, $content_status, plus custom events) so Sift can update its models. Set return_score=true to receive a Sift Score inline, or return_workflow_status=true to receive workflow decisions. The API key is supplied as $api_key in the body or via HTTP Basic auth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v205",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "return_score",
+                  "value": "<boolean>",
+                  "description": "Return the user's Sift Score inline with the event response."
+                },
+                {
+                  "disabled": false,
+                  "key": "return_action",
+                  "value": "<boolean>",
+                  "description": "Return actions triggered by the event."
+                },
+                {
+                  "disabled": false,
+                  "key": "return_workflow_status",
+                  "value": "<boolean>",
+                  "description": "Return the status and decisions of any workflow run triggered by the event."
+                },
+                {
+                  "disabled": false,
+                  "key": "abuse_types",
+                  "value": "<string>",
+                  "description": "Comma-separated abuse types to score against when return_score is true."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"$type\": \"<string>\",\n  \"$api_key\": \"<string>\",\n  \"$user_id\": \"<string>\",\n  \"$session_id\": \"<string>\",\n  \"$order_id\": \"<string>\",\n  \"$user_email\": \"<string>\",\n  \"$ip\": \"<string>\",\n  \"$amount\": \"<long>\",\n  \"$currency_code\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "52c51941-7e7a-4e19-8d8c-9eee7ee40788",
+              "name": "The event was accepted. status 0 indicates success.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v205",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_score",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "return_action",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "return_workflow_status",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "abuse_types",
+                      "value": "payment_abuse,account_abuse,account_takeover"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$type\": \"$create_order\",\n  \"$api_key\": \"<string>\",\n  \"$user_id\": \"<string>\",\n  \"$session_id\": \"<string>\",\n  \"$order_id\": \"<string>\",\n  \"$user_email\": \"<string>\",\n  \"$ip\": \"<string>\",\n  \"$amount\": \"<long>\",\n  \"$currency_code\": \"USD\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 8857,\n  \"error_message\": \"string\",\n  \"time\": 6356,\n  \"request\": \"string\",\n  \"score_response\": {\n    \"status\": 7389,\n    \"error_message\": \"string\",\n    \"user_id\": \"string\",\n    \"scores\": {\n      \"key_0\": {\n        \"score\": 0.22476136003030578,\n        \"reasons\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\",\n            \"details\": {\n              \"key_0\": 7964.270721166613,\n              \"key_1\": true,\n              \"key_2\": 455.2994722202053,\n              \"key_3\": 8535\n            }\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\",\n            \"details\": {\n              \"key_0\": 6089\n            }\n          }\n        ]\n      },\n      \"key_1\": {\n        \"score\": 0.2702421434605421,\n        \"reasons\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\",\n            \"details\": {\n              \"key_0\": false,\n              \"key_1\": 9863.079125017935\n            }\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\",\n            \"details\": {\n              \"key_0\": \"string\",\n              \"key_1\": \"string\",\n              \"key_2\": true\n            }\n          }\n        ]\n      },\n      \"key_2\": {\n        \"score\": 0.5394598792499539,\n        \"reasons\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\",\n            \"details\": {\n              \"key_0\": false,\n              \"key_1\": 2535\n            }\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\",\n            \"details\": {\n              \"key_0\": 7000.511662687357,\n              \"key_1\": \"string\",\n              \"key_2\": 5788\n            }\n          }\n        ]\n      },\n      \"key_3\": {\n        \"score\": 0.03771981149565318,\n        \"reasons\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\",\n            \"details\": {\n              \"key_0\": true,\n              \"key_1\": 271\n            }\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\",\n            \"details\": {\n              \"key_0\": true,\n              \"key_1\": \"string\",\n              \"key_2\": 6054.448771424775\n            }\n          }\n        ]\n      }\n    },\n    \"latest_labels\": {\n      \"key_0\": 2642.031422960762,\n      \"key_1\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a4b4a28-b11f-4172-9fe2-ad5f6aa91aed",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v205",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_score",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "return_action",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "return_workflow_status",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "abuse_types",
+                      "value": "payment_abuse,account_abuse,account_takeover"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$type\": \"$create_order\",\n  \"$api_key\": \"<string>\",\n  \"$user_id\": \"<string>\",\n  \"$session_id\": \"<string>\",\n  \"$order_id\": \"<string>\",\n  \"$user_email\": \"<string>\",\n  \"$ip\": \"<string>\",\n  \"$amount\": \"<long>\",\n  \"$currency_code\": \"USD\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 7489,\n  \"error_message\": \"string\",\n  \"time\": 6680\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sift.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "16139e56-d1ad-4980-9fef-f4e8d687e40a",
+    "name": "Sift Decisions Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse. This definition covers Sift's public REST APIs: the Events API (stream user activity), the Score API (real-time Sift Scores 0-100 per abuse type), the Decisions API (apply/retrieve accept/watch/block decisions), the Workflow Status API, the legacy Labels API, the Verification API (OTP step-up), and the PSP Merchant Management API.\n\nMODELED SPECIFICATION - IMPORTANT: Sift does not publish a single machine-readable OpenAPI document. This file was MODELED by API Evangelist from Sift's public developer documentation (developers.sift.com) and its officially maintained open-source client libraries (sift-python, sift-ruby, sift-java), which encode the exact paths, HTTP methods, and per-API versions. Endpoint paths, methods, versions, and authentication are confirmed against those sources. Request and response bodies are REPRESENTATIVE: Sift documents example payloads and field dictionaries rather than full JSON Schemas for most resources, so the schema shapes here are modeled from documented examples and may not enumerate every optional field. See review.yml for the confirmed-vs-modeled breakdown.\n\nVersioning is per API family: Events, Score, and Labels are on v205; Decisions, Workflows, and PSP Merchant Management are on v3; Verification is on v1.\n\nContact Support:\n Name: Sift Developer Documentation",
+      "type": "text/plain"
+    }
+  }
+}

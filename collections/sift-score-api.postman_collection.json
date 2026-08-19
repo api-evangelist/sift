@@ -1,0 +1,747 @@
+{
+  "item": [
+    {
+      "id": "421b8c51-f0fc-4e21-b879-ede9c384b480",
+      "name": "Score",
+      "description": {
+        "content": "Retrieve real-time Sift Scores per abuse type.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f33baef6-775a-453e-9916-f6574e6e4af4",
+          "name": "Get a user's Sift Score",
+          "request": {
+            "name": "Get a user's Sift Score",
+            "description": {
+              "content": "Retrieves the current Sift Score(s) for a user. Scores range 0-100 (higher is riskier) and are returned per abuse type with reason codes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v205",
+                "score",
+                ":user_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "abuse_types",
+                  "value": "<string>",
+                  "description": "Comma-separated abuse types to return scores for."
+                },
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key, if not supplied via HTTP Basic auth."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier for the user, URL-encoded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "92baa9ce-ae10-4e2e-b1aa-c4dcb2f171f1",
+              "name": "The user's Sift Score response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v205",
+                    "score",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "abuse_types",
+                      "value": "payment_abuse,account_takeover"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier for the user, URL-encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 8018,\n  \"error_message\": \"string\",\n  \"user_id\": \"string\",\n  \"scores\": {\n    \"key_0\": {\n      \"score\": 0.26582549405321376,\n      \"reasons\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": 4345,\n            \"key_1\": 1150\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": \"string\",\n            \"key_1\": true,\n            \"key_2\": 1472.518788055449\n          }\n        }\n      ]\n    }\n  },\n  \"latest_labels\": {\n    \"key_0\": 8264\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16ce0616-15c1-4dd9-9c98-39f4685ddd8b",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v205",
+                    "score",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "abuse_types",
+                      "value": "payment_abuse,account_takeover"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier for the user, URL-encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 9229,\n  \"error_message\": \"string\",\n  \"time\": 4175\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "355acebc-6ffc-447a-874a-11a063da5a7c",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v205",
+                    "score",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "abuse_types",
+                      "value": "payment_abuse,account_takeover"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier for the user, URL-encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 9229,\n  \"error_message\": \"string\",\n  \"time\": 4175\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "86830b56-a2b5-4b25-8c98-48fbf70ac985",
+          "name": "Get latest score (no recompute)",
+          "request": {
+            "name": "Get latest score (no recompute)",
+            "description": {
+              "content": "Fetches the latest previously computed Sift Score for a user without recomputing it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v205",
+                "users",
+                ":user_id",
+                "score"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "abuse_types",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier for the user, URL-encoded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d3dc5164-be26-4fc1-ac7b-641bdda6fac9",
+              "name": "The user's latest Sift Score response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v205",
+                    "users",
+                    ":user_id",
+                    "score"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "abuse_types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier for the user, URL-encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 9065,\n  \"error_message\": \"string\",\n  \"user_id\": \"string\",\n  \"scores\": {\n    \"key_0\": {\n      \"score\": 0.05205146327194832,\n      \"reasons\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": 801,\n            \"key_1\": \"string\",\n            \"key_2\": 6731,\n            \"key_3\": \"string\",\n            \"key_4\": true\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": 7854,\n            \"key_1\": false,\n            \"key_2\": \"string\"\n          }\n        }\n      ]\n    },\n    \"key_1\": {\n      \"score\": 0.8167637971000704,\n      \"reasons\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": \"string\"\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": true\n          }\n        }\n      ]\n    },\n    \"key_2\": {\n      \"score\": 0.12604944685953168,\n      \"reasons\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": 1671.2025041685629\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": \"string\",\n            \"key_1\": false\n          }\n        }\n      ]\n    }\n  },\n  \"latest_labels\": {\n    \"key_0\": 8509,\n    \"key_1\": 175,\n    \"key_2\": 3585.5129167380474,\n    \"key_3\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5357475-7174-44eb-9d4c-9feb14c975f7",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v205",
+                    "users",
+                    ":user_id",
+                    "score"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "abuse_types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier for the user, URL-encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 9229,\n  \"error_message\": \"string\",\n  \"time\": 4175\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dadd6adb-5b9d-448a-853b-d4683b06c922",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v205",
+                    "users",
+                    ":user_id",
+                    "score"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "abuse_types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier for the user, URL-encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 9229,\n  \"error_message\": \"string\",\n  \"time\": 4175\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d344f79a-e314-4d07-8408-131f58ce28ee",
+          "name": "Rescore a user",
+          "request": {
+            "name": "Rescore a user",
+            "description": {
+              "content": "Recomputes and returns the Sift Score for a user for the specified abuse types.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v205",
+                "users",
+                ":user_id",
+                "score"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "abuse_types",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier for the user, URL-encoded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b06cc6ce-2957-4dbe-9a6f-7e5eab86372c",
+              "name": "The recomputed Sift Score response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v205",
+                    "users",
+                    ":user_id",
+                    "score"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "abuse_types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier for the user, URL-encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 9065,\n  \"error_message\": \"string\",\n  \"user_id\": \"string\",\n  \"scores\": {\n    \"key_0\": {\n      \"score\": 0.05205146327194832,\n      \"reasons\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": 801,\n            \"key_1\": \"string\",\n            \"key_2\": 6731,\n            \"key_3\": \"string\",\n            \"key_4\": true\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": 7854,\n            \"key_1\": false,\n            \"key_2\": \"string\"\n          }\n        }\n      ]\n    },\n    \"key_1\": {\n      \"score\": 0.8167637971000704,\n      \"reasons\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": \"string\"\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": true\n          }\n        }\n      ]\n    },\n    \"key_2\": {\n      \"score\": 0.12604944685953168,\n      \"reasons\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": 1671.2025041685629\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"details\": {\n            \"key_0\": \"string\",\n            \"key_1\": false\n          }\n        }\n      ]\n    }\n  },\n  \"latest_labels\": {\n    \"key_0\": 8509,\n    \"key_1\": 175,\n    \"key_2\": 3585.5129167380474,\n    \"key_3\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d597d45a-6f59-477f-be15-b941bdd83e24",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v205",
+                    "users",
+                    ":user_id",
+                    "score"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "abuse_types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier for the user, URL-encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 9229,\n  \"error_message\": \"string\",\n  \"time\": 4175\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64eb36ec-eee8-4828-b7fa-0c071a629eb3",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v205",
+                    "users",
+                    ":user_id",
+                    "score"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "abuse_types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier for the user, URL-encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 9229,\n  \"error_message\": \"string\",\n  \"time\": 4175\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sift.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "957ad51d-0af6-45c5-b734-9e6610569c55",
+    "name": "Sift Decisions Score API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse. This definition covers Sift's public REST APIs: the Events API (stream user activity), the Score API (real-time Sift Scores 0-100 per abuse type), the Decisions API (apply/retrieve accept/watch/block decisions), the Workflow Status API, the legacy Labels API, the Verification API (OTP step-up), and the PSP Merchant Management API.\n\nMODELED SPECIFICATION - IMPORTANT: Sift does not publish a single machine-readable OpenAPI document. This file was MODELED by API Evangelist from Sift's public developer documentation (developers.sift.com) and its officially maintained open-source client libraries (sift-python, sift-ruby, sift-java), which encode the exact paths, HTTP methods, and per-API versions. Endpoint paths, methods, versions, and authentication are confirmed against those sources. Request and response bodies are REPRESENTATIVE: Sift documents example payloads and field dictionaries rather than full JSON Schemas for most resources, so the schema shapes here are modeled from documented examples and may not enumerate every optional field. See review.yml for the confirmed-vs-modeled breakdown.\n\nVersioning is per API family: Events, Score, and Labels are on v205; Decisions, Workflows, and PSP Merchant Management are on v3; Verification is on v1.\n\nContact Support:\n Name: Sift Developer Documentation",
+      "type": "text/plain"
+    }
+  }
+}
