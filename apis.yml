@@ -28,6 +28,16 @@ tags:
 - Fraud Prevention
 - Risk
 - Trust and Safety
+- Machine-Learning
+- Payment Fraud
+- Account Takeover
+- Chargebacks
+- Digital Trust
+tags_raw:
+- Fraud Detection
+- Fraud Prevention
+- Risk
+- Trust and Safety
 - Machine Learning
 - Payment Fraud
 - Account Takeover
@@ -69,6 +79,8 @@ apis:
   humanURL: https://developers.sift.com/docs/curl/events-api/overview
   baseURL: https://api.sift.com
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
