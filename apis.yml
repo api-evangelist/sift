@@ -9,6 +9,18 @@ description: Sift is a digital trust and safety platform that uses machine learn
   and act on them through the Decisions API, automated Workflows, verification (OTP),
   and PSP merchant risk management. Sift exposes a documented public REST API over
   HTTPS at https://api.sift.com with API-key authentication.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: self-serve
