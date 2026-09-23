@@ -1,13 +1,7 @@
 {
   "provider": "sift",
   "sources": [
-    "sift-decisions-api-openapi.yml",
-    "sift-events-api-openapi.yml",
-    "sift-labels-api-openapi.yml",
-    "sift-psp-merchant-management-api-openapi.yml",
-    "sift-score-api-openapi.yml",
-    "sift-verification-api-openapi.yml",
-    "sift-workflows-api-openapi.yml"
+    "_original/sift-openapi.yml"
   ],
   "outputs": [
     "sift-decisions-api-openapi.yml",
@@ -21,6 +15,18 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sift-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "sift-decisions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sift-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sift-labels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sift-psp-merchant-management-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sift-score-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sift-verification-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sift-workflows-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

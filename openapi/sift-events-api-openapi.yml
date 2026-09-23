@@ -1,13 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Sift Decisions Events API
-  description: 'Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse. This definition covers Sift''s public REST APIs: the Events API (stream user activity), the Score API (real-time Sift Scores 0-100 per abuse type), the Decisions API (apply/retrieve accept/watch/block decisions), the Workflow Status API, the legacy Labels API, the Verification API (OTP step-up), and the PSP Merchant Management API.
-
-
-    MODELED SPECIFICATION - IMPORTANT: Sift does not publish a single machine-readable OpenAPI document. This file was MODELED by API Evangelist from Sift''s public developer documentation (developers.sift.com) and its officially maintained open-source client libraries (sift-python, sift-ruby, sift-java), which encode the exact paths, HTTP methods, and per-API versions. Endpoint paths, methods, versions, and authentication are confirmed against those sources. Request and response bodies are REPRESENTATIVE: Sift documents example payloads and field dictionaries rather than full JSON Schemas for most resources, so the schema shapes here are modeled from documented examples and may not enumerate every optional field. See review.yml for the confirmed-vs-modeled breakdown.
-
-
-    Versioning is per API family: Events, Score, and Labels are on v205; Decisions, Workflows, and PSP Merchant Management are on v3; Verification is on v1.'
+  title: Sift Events API
+  description: Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse.
   version: '2026-07-12'
   contact:
     name: Sift Developer Documentation
@@ -77,52 +71,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    EventResponse:
-      type: object
-      description: Modeled response envelope for event and label ingestion.
-      properties:
-        status:
-          type: integer
-          description: 0 indicates the event was accepted.
-        error_message:
-          type: string
-        time:
-          type: integer
-          format: int64
-        request:
-          type: string
-        score_response:
-          $ref: '#/components/schemas/ScoreResponse'
-    ApiError:
-      type: object
-      description: Modeled error envelope. Sift returns a numeric status and error_message.
-      properties:
-        status:
-          type: integer
-          description: Sift status code (0 indicates success; non-zero indicates an error).
-        error_message:
-          type: string
-        time:
-          type: integer
-          format: int64
-    ScoreResponse:
-      type: object
-      description: Sift Score response (modeled). Scores range 0-100; higher is riskier. The scores object is keyed by abuse type, each carrying a score and reason codes.
-      properties:
-        status:
-          type: integer
-        error_message:
-          type: string
-        user_id:
-          type: string
-        scores:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/AbuseScore'
-          description: Keyed by abuse type - payment_abuse, account_abuse, account_takeover, content_abuse, promotion_abuse.
-        latest_labels:
-          type: object
-          additionalProperties: true
     AbuseScore:
       type: object
       properties:
@@ -144,6 +92,22 @@ components:
               details:
                 type: object
                 additionalProperties: true
+    EventResponse:
+      type: object
+      description: Modeled response envelope for event and label ingestion.
+      properties:
+        status:
+          type: integer
+          description: 0 indicates the event was accepted.
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
+        request:
+          type: string
+        score_response:
+          $ref: '#/components/schemas/ScoreResponse'
     Event:
       type: object
       description: A Sift event. Reserved fields are prefixed with $ (for example $type, $user_id, $api_key). Reserved event types include $create_account, $update_account, $login, $create_order, $update_order, $transaction, $chargeback, $content_status, $create_content, and more; custom events use an unprefixed type. This schema is modeled from documented examples and shows common fields rather than the full field dictionary.
@@ -177,6 +141,36 @@ components:
           type: string
           example: USD
       additionalProperties: true
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
+    ScoreResponse:
+      type: object
+      description: Sift Score response (modeled). Scores range 0-100; higher is riskier. The scores object is keyed by abuse type, each carrying a score and reason codes.
+      properties:
+        status:
+          type: integer
+        error_message:
+          type: string
+        user_id:
+          type: string
+        scores:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AbuseScore'
+          description: Keyed by abuse type - payment_abuse, account_abuse, account_takeover, content_abuse, promotion_abuse.
+        latest_labels:
+          type: object
+          additionalProperties: true
   responses:
     Unauthorized:
       description: Missing or invalid API key.
