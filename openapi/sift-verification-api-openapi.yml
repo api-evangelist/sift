@@ -89,45 +89,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    VerificationCheckRequest:
-      type: object
-      required:
-      - $user_id
-      - $code
-      properties:
-        $user_id:
-          type: string
-        $code:
-          type: integer
-          description: The one-time passcode entered by the user.
-        verified_event:
-          type: string
-    VerificationResponse:
-      type: object
-      properties:
-        status:
-          type: integer
-          description: Sift status code for the verification operation.
-        error_message:
-          type: string
-        sent_at:
-          type: integer
-          format: int64
-        checked_at:
-          type: integer
-          format: int64
-    ApiError:
-      type: object
-      description: Modeled error envelope. Sift returns a numeric status and error_message.
-      properties:
-        status:
-          type: integer
-          description: Sift status code (0 indicates success; non-zero indicates an error).
-        error_message:
-          type: string
-        time:
-          type: integer
-          format: int64
     VerificationSendRequest:
       type: object
       description: Request to send an OTP (modeled from documented examples).
@@ -154,6 +115,20 @@ components:
           type: object
           description: The Sift event context that triggered the verification.
           additionalProperties: true
+    VerificationResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: Sift status code for the verification operation.
+        error_message:
+          type: string
+        sent_at:
+          type: integer
+          format: int64
+        checked_at:
+          type: integer
+          format: int64
     VerificationResendRequest:
       type: object
       required:
@@ -163,6 +138,31 @@ components:
           type: string
         verified_event:
           type: string
+    VerificationCheckRequest:
+      type: object
+      required:
+      - $user_id
+      - $code
+      properties:
+        $user_id:
+          type: string
+        $code:
+          type: integer
+          description: The one-time passcode entered by the user.
+        verified_event:
+          type: string
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
   responses:
     Unauthorized:
       description: Missing or invalid API key.

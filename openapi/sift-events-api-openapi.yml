@@ -92,22 +92,6 @@ components:
               details:
                 type: object
                 additionalProperties: true
-    EventResponse:
-      type: object
-      description: Modeled response envelope for event and label ingestion.
-      properties:
-        status:
-          type: integer
-          description: 0 indicates the event was accepted.
-        error_message:
-          type: string
-        time:
-          type: integer
-          format: int64
-        request:
-          type: string
-        score_response:
-          $ref: '#/components/schemas/ScoreResponse'
     Event:
       type: object
       description: A Sift event. Reserved fields are prefixed with $ (for example $type, $user_id, $api_key). Reserved event types include $create_account, $update_account, $login, $create_order, $update_order, $transaction, $chargeback, $content_status, $create_content, and more; custom events use an unprefixed type. This schema is modeled from documented examples and shows common fields rather than the full field dictionary.
@@ -141,18 +125,22 @@ components:
           type: string
           example: USD
       additionalProperties: true
-    ApiError:
+    EventResponse:
       type: object
-      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      description: Modeled response envelope for event and label ingestion.
       properties:
         status:
           type: integer
-          description: Sift status code (0 indicates success; non-zero indicates an error).
+          description: 0 indicates the event was accepted.
         error_message:
           type: string
         time:
           type: integer
           format: int64
+        request:
+          type: string
+        score_response:
+          $ref: '#/components/schemas/ScoreResponse'
     ScoreResponse:
       type: object
       description: Sift Score response (modeled). Scores range 0-100; higher is riskier. The scores object is keyed by abuse type, each carrying a score and reason codes.
@@ -171,6 +159,18 @@ components:
         latest_labels:
           type: object
           additionalProperties: true
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
   responses:
     Unauthorized:
       description: Missing or invalid API key.

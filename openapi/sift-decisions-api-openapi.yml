@@ -176,67 +176,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    AccountId:
-      name: account_id
-      in: path
-      required: true
-      description: Your numeric Sift Account ID.
-      schema:
-        type: string
-    ContentId:
-      name: content_id
-      in: path
-      required: true
-      description: The unique identifier for the content, URL-encoded.
-      schema:
-        type: string
-    SessionId:
-      name: session_id
-      in: path
-      required: true
-      description: The unique identifier for the session, URL-encoded.
-      schema:
-        type: string
-    OrderId:
-      name: order_id
-      in: path
-      required: true
-      description: The unique identifier for the order, URL-encoded.
-      schema:
-        type: string
-    UserId:
-      name: user_id
-      in: path
-      required: true
-      description: The unique identifier for the user, URL-encoded.
-      schema:
-        type: string
   schemas:
-    Decision:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        entity_type:
-          type: string
-          enum:
-          - user
-          - order
-          - session
-          - content
-        abuse_type:
-          type: string
-        category:
-          type: string
-          enum:
-          - block
-          - watch
-          - accept
     DecisionApplyResponse:
       type: object
       properties:
@@ -289,6 +229,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Decision'
+    Decision:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        entity_type:
+          type: string
+          enum:
+          - user
+          - order
+          - session
+          - content
+        abuse_type:
+          type: string
+        category:
+          type: string
+          enum:
+          - block
+          - watch
+          - accept
     DecisionStatus:
       type: object
       description: The latest decisions applied to an entity, keyed by abuse type.
@@ -320,6 +284,42 @@ components:
         time:
           type: integer
           format: int64
+  parameters:
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      description: The unique identifier for the user, URL-encoded.
+      schema:
+        type: string
+    SessionId:
+      name: session_id
+      in: path
+      required: true
+      description: The unique identifier for the session, URL-encoded.
+      schema:
+        type: string
+    ContentId:
+      name: content_id
+      in: path
+      required: true
+      description: The unique identifier for the content, URL-encoded.
+      schema:
+        type: string
+    OrderId:
+      name: order_id
+      in: path
+      required: true
+      description: The unique identifier for the order, URL-encoded.
+      schema:
+        type: string
+    AccountId:
+      name: account_id
+      in: path
+      required: true
+      description: Your numeric Sift Account ID.
+      schema:
+        type: string
   responses:
     Unauthorized:
       description: Missing or invalid API key.

@@ -36,11 +36,10 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sift.png
 tags:
-- Fraud Detection
 - Fraud Prevention
-- Risk
+- Risk Management
 - Trust and Safety
-- Machine-Learning
+- Machine Learning
 - Payment Fraud
 - Account Takeover
 - Chargebacks
@@ -55,6 +54,7 @@ tags_raw:
 - Account Takeover
 - Chargebacks
 - Digital Trust
+- Machine-Learning
 created: '2026-07-12'
 modified: '2026-07-12'
 specificationVersion: '0.23'
