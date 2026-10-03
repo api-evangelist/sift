@@ -177,58 +177,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    DecisionApplyResponse:
-      type: object
-      properties:
-        entity:
-          type: object
-          properties:
-            id:
-              type: string
-            type:
-              type: string
-        decision:
-          type: object
-          properties:
-            id:
-              type: string
-        time:
-          type: integer
-          format: int64
-    DecisionRequest:
-      type: object
-      description: Request to apply a decision to an entity (modeled from documented examples).
-      required:
-      - decision_id
-      - source
-      properties:
-        decision_id:
-          type: string
-          description: The ID of a decision configured in the Sift console.
-          example: block_user_payment_abuse
-        source:
-          type: string
-          enum:
-          - MANUAL_REVIEW
-          - AUTOMATED_RULE
-          - CHARGEBACK
-          description: What produced the decision.
-        analyst:
-          type: string
-          description: Identifier (e.g. email) of the analyst, required when source is MANUAL_REVIEW.
-        description:
-          type: string
-        time:
-          type: integer
-          format: int64
-          description: Epoch milliseconds the decision was made.
-    DecisionList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Decision'
     Decision:
       type: object
       properties:
@@ -272,6 +220,24 @@ components:
                 format: int64
               webhook_succeeded:
                 type: boolean
+    DecisionApplyResponse:
+      type: object
+      properties:
+        entity:
+          type: object
+          properties:
+            id:
+              type: string
+            type:
+              type: string
+        decision:
+          type: object
+          properties:
+            id:
+              type: string
+        time:
+          type: integer
+          format: int64
     ApiError:
       type: object
       description: Modeled error envelope. Sift returns a numeric status and error_message.
@@ -284,19 +250,46 @@ components:
         time:
           type: integer
           format: int64
+    DecisionRequest:
+      type: object
+      description: Request to apply a decision to an entity (modeled from documented examples).
+      required:
+      - decision_id
+      - source
+      properties:
+        decision_id:
+          type: string
+          description: The ID of a decision configured in the Sift console.
+          example: block_user_payment_abuse
+        source:
+          type: string
+          enum:
+          - MANUAL_REVIEW
+          - AUTOMATED_RULE
+          - CHARGEBACK
+          description: What produced the decision.
+        analyst:
+          type: string
+          description: Identifier (e.g. email) of the analyst, required when source is MANUAL_REVIEW.
+        description:
+          type: string
+        time:
+          type: integer
+          format: int64
+          description: Epoch milliseconds the decision was made.
+    DecisionList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Decision'
   parameters:
-    UserId:
-      name: user_id
+    AccountId:
+      name: account_id
       in: path
       required: true
-      description: The unique identifier for the user, URL-encoded.
-      schema:
-        type: string
-    SessionId:
-      name: session_id
-      in: path
-      required: true
-      description: The unique identifier for the session, URL-encoded.
+      description: Your numeric Sift Account ID.
       schema:
         type: string
     ContentId:
@@ -313,11 +306,18 @@ components:
       description: The unique identifier for the order, URL-encoded.
       schema:
         type: string
-    AccountId:
-      name: account_id
+    UserId:
+      name: user_id
       in: path
       required: true
-      description: Your numeric Sift Account ID.
+      description: The unique identifier for the user, URL-encoded.
+      schema:
+        type: string
+    SessionId:
+      name: session_id
+      in: path
+      required: true
+      description: The unique identifier for the session, URL-encoded.
       schema:
         type: string
   responses:

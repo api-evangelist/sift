@@ -48,6 +48,14 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    AccountId:
+      name: account_id
+      in: path
+      required: true
+      description: Your numeric Sift Account ID.
+      schema:
+        type: string
   responses:
     Unauthorized:
       description: Missing or invalid API key.
@@ -61,14 +69,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-  parameters:
-    AccountId:
-      name: account_id
-      in: path
-      required: true
-      description: Your numeric Sift Account ID.
-      schema:
-        type: string
   schemas:
     WorkflowRun:
       type: object

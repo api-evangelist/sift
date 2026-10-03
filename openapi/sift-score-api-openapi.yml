@@ -105,15 +105,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    UserId:
-      name: user_id
-      in: path
-      required: true
-      description: The unique identifier for the user, URL-encoded.
-      schema:
-        type: string
   schemas:
+    ScoreResponse:
+      type: object
+      description: Sift Score response (modeled). Scores range 0-100; higher is riskier. The scores object is keyed by abuse type, each carrying a score and reason codes.
+      properties:
+        status:
+          type: integer
+        error_message:
+          type: string
+        user_id:
+          type: string
+        scores:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AbuseScore'
+          description: Keyed by abuse type - payment_abuse, account_abuse, account_takeover, content_abuse, promotion_abuse.
+        latest_labels:
+          type: object
+          additionalProperties: true
     AbuseScore:
       type: object
       properties:
@@ -135,24 +145,6 @@ components:
               details:
                 type: object
                 additionalProperties: true
-    ScoreResponse:
-      type: object
-      description: Sift Score response (modeled). Scores range 0-100; higher is riskier. The scores object is keyed by abuse type, each carrying a score and reason codes.
-      properties:
-        status:
-          type: integer
-        error_message:
-          type: string
-        user_id:
-          type: string
-        scores:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/AbuseScore'
-          description: Keyed by abuse type - payment_abuse, account_abuse, account_takeover, content_abuse, promotion_abuse.
-        latest_labels:
-          type: object
-          additionalProperties: true
     ApiError:
       type: object
       description: Modeled error envelope. Sift returns a numeric status and error_message.
@@ -178,6 +170,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+  parameters:
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      description: The unique identifier for the user, URL-encoded.
+      schema:
+        type: string
   securitySchemes:
     apiKeyBasic:
       type: http

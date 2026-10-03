@@ -68,15 +68,41 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    UserId:
-      name: user_id
-      in: path
-      required: true
-      description: The unique identifier for the user, URL-encoded.
-      schema:
-        type: string
   schemas:
+    ScoreResponse:
+      type: object
+      description: Sift Score response (modeled). Scores range 0-100; higher is riskier. The scores object is keyed by abuse type, each carrying a score and reason codes.
+      properties:
+        status:
+          type: integer
+        error_message:
+          type: string
+        user_id:
+          type: string
+        scores:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AbuseScore'
+          description: Keyed by abuse type - payment_abuse, account_abuse, account_takeover, content_abuse, promotion_abuse.
+        latest_labels:
+          type: object
+          additionalProperties: true
+    EventResponse:
+      type: object
+      description: Modeled response envelope for event and label ingestion.
+      properties:
+        status:
+          type: integer
+          description: 0 indicates the event was accepted.
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
+        request:
+          type: string
+        score_response:
+          $ref: '#/components/schemas/ScoreResponse'
     AbuseScore:
       type: object
       properties:
@@ -98,6 +124,18 @@ components:
               details:
                 type: object
                 additionalProperties: true
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
     Label:
       type: object
       description: Legacy label payload (modeled from documented examples).
@@ -126,52 +164,6 @@ components:
           type: string
         $analyst:
           type: string
-    EventResponse:
-      type: object
-      description: Modeled response envelope for event and label ingestion.
-      properties:
-        status:
-          type: integer
-          description: 0 indicates the event was accepted.
-        error_message:
-          type: string
-        time:
-          type: integer
-          format: int64
-        request:
-          type: string
-        score_response:
-          $ref: '#/components/schemas/ScoreResponse'
-    ScoreResponse:
-      type: object
-      description: Sift Score response (modeled). Scores range 0-100; higher is riskier. The scores object is keyed by abuse type, each carrying a score and reason codes.
-      properties:
-        status:
-          type: integer
-        error_message:
-          type: string
-        user_id:
-          type: string
-        scores:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/AbuseScore'
-          description: Keyed by abuse type - payment_abuse, account_abuse, account_takeover, content_abuse, promotion_abuse.
-        latest_labels:
-          type: object
-          additionalProperties: true
-    ApiError:
-      type: object
-      description: Modeled error envelope. Sift returns a numeric status and error_message.
-      properties:
-        status:
-          type: integer
-          description: Sift status code (0 indicates success; non-zero indicates an error).
-        error_message:
-          type: string
-        time:
-          type: integer
-          format: int64
   responses:
     Unauthorized:
       description: Missing or invalid API key.
@@ -179,6 +171,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+  parameters:
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      description: The unique identifier for the user, URL-encoded.
+      schema:
+        type: string
   securitySchemes:
     apiKeyBasic:
       type: http
