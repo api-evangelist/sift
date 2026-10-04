@@ -89,19 +89,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    VerificationCheckRequest:
-      type: object
-      required:
-      - $user_id
-      - $code
-      properties:
-        $user_id:
-          type: string
-        $code:
-          type: integer
-          description: The one-time passcode entered by the user.
-        verified_event:
-          type: string
     ApiError:
       type: object
       description: Modeled error envelope. Sift returns a numeric status and error_message.
@@ -128,15 +115,6 @@ components:
         checked_at:
           type: integer
           format: int64
-    VerificationResendRequest:
-      type: object
-      required:
-      - $user_id
-      properties:
-        $user_id:
-          type: string
-        verified_event:
-          type: string
     VerificationSendRequest:
       type: object
       description: Request to send an OTP (modeled from documented examples).
@@ -163,6 +141,28 @@ components:
           type: object
           description: The Sift event context that triggered the verification.
           additionalProperties: true
+    VerificationResendRequest:
+      type: object
+      required:
+      - $user_id
+      properties:
+        $user_id:
+          type: string
+        verified_event:
+          type: string
+    VerificationCheckRequest:
+      type: object
+      required:
+      - $user_id
+      - $code
+      properties:
+        $user_id:
+          type: string
+        $code:
+          type: integer
+          description: The one-time passcode entered by the user.
+        verified_event:
+          type: string
   responses:
     Unauthorized:
       description: Missing or invalid API key.

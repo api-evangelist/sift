@@ -177,6 +177,25 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
+    DecisionList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Decision'
     Decision:
       type: object
       properties:
@@ -201,6 +220,24 @@ components:
           - block
           - watch
           - accept
+    DecisionApplyResponse:
+      type: object
+      properties:
+        entity:
+          type: object
+          properties:
+            id:
+              type: string
+            type:
+              type: string
+        decision:
+          type: object
+          properties:
+            id:
+              type: string
+        time:
+          type: integer
+          format: int64
     DecisionStatus:
       type: object
       description: The latest decisions applied to an entity, keyed by abuse type.
@@ -220,36 +257,6 @@ components:
                 format: int64
               webhook_succeeded:
                 type: boolean
-    DecisionApplyResponse:
-      type: object
-      properties:
-        entity:
-          type: object
-          properties:
-            id:
-              type: string
-            type:
-              type: string
-        decision:
-          type: object
-          properties:
-            id:
-              type: string
-        time:
-          type: integer
-          format: int64
-    ApiError:
-      type: object
-      description: Modeled error envelope. Sift returns a numeric status and error_message.
-      properties:
-        status:
-          type: integer
-          description: Sift status code (0 indicates success; non-zero indicates an error).
-        error_message:
-          type: string
-        time:
-          type: integer
-          format: int64
     DecisionRequest:
       type: object
       description: Request to apply a decision to an entity (modeled from documented examples).
@@ -277,21 +284,7 @@ components:
           type: integer
           format: int64
           description: Epoch milliseconds the decision was made.
-    DecisionList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Decision'
   parameters:
-    AccountId:
-      name: account_id
-      in: path
-      required: true
-      description: Your numeric Sift Account ID.
-      schema:
-        type: string
     ContentId:
       name: content_id
       in: path
@@ -299,11 +292,11 @@ components:
       description: The unique identifier for the content, URL-encoded.
       schema:
         type: string
-    OrderId:
-      name: order_id
+    SessionId:
+      name: session_id
       in: path
       required: true
-      description: The unique identifier for the order, URL-encoded.
+      description: The unique identifier for the session, URL-encoded.
       schema:
         type: string
     UserId:
@@ -313,11 +306,18 @@ components:
       description: The unique identifier for the user, URL-encoded.
       schema:
         type: string
-    SessionId:
-      name: session_id
+    OrderId:
+      name: order_id
       in: path
       required: true
-      description: The unique identifier for the session, URL-encoded.
+      description: The unique identifier for the order, URL-encoded.
+      schema:
+        type: string
+    AccountId:
+      name: account_id
+      in: path
+      required: true
+      description: Your numeric Sift Account ID.
       schema:
         type: string
   responses:

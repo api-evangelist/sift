@@ -122,6 +122,31 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
+    PspMerchantList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PspMerchant'
+        has_more:
+          type: boolean
+        next_ref:
+          type: string
+        total_results:
+          type: integer
     PspMerchant:
       type: object
       description: PSP sub-merchant profile (modeled from documented examples).
@@ -157,39 +182,6 @@ components:
             score:
               type: number
               format: float
-    PspMerchantList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/PspMerchant'
-        has_more:
-          type: boolean
-        next_ref:
-          type: string
-        total_results:
-          type: integer
-    ApiError:
-      type: object
-      description: Modeled error envelope. Sift returns a numeric status and error_message.
-      properties:
-        status:
-          type: integer
-          description: Sift status code (0 indicates success; non-zero indicates an error).
-        error_message:
-          type: string
-        time:
-          type: integer
-          format: int64
-  parameters:
-    AccountId:
-      name: account_id
-      in: path
-      required: true
-      description: Your numeric Sift Account ID.
-      schema:
-        type: string
   responses:
     Unauthorized:
       description: Missing or invalid API key.
@@ -203,6 +195,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+  parameters:
+    AccountId:
+      name: account_id
+      in: path
+      required: true
+      description: Your numeric Sift Account ID.
+      schema:
+        type: string
   securitySchemes:
     apiKeyBasic:
       type: http
