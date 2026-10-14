@@ -1,0 +1,23 @@
+generated: '2026-10-14'
+method: searched
+checked:
+- ping-identity/integrations/ping-identity-integration-edges.yml
+source:
+- ping-identity/integrations/ping-identity-integration-edges.yml
+edges:
+- partner_name: Ping Identity (own)
+  partner: ping-identity
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.pingone.com/item/sift-davinci-connector
+  mirror_of: ping-identity/integrations/ping-identity-integration-edges.yml
+  apps:
+  - Sift Connector
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
