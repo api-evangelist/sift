@@ -49,18 +49,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ApiError:
-      type: object
-      description: Modeled error envelope. Sift returns a numeric status and error_message.
-      properties:
-        status:
-          type: integer
-          description: Sift status code (0 indicates success; non-zero indicates an error).
-        error_message:
-          type: string
-        time:
-          type: integer
-          format: int64
     WorkflowRun:
       type: object
       description: Workflow run status (modeled).
@@ -85,19 +73,18 @@ components:
           items:
             type: object
             additionalProperties: true
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
   parameters:
     AccountId:
       name: account_id
@@ -106,6 +93,19 @@ components:
       description: Your numeric Sift Account ID.
       schema:
         type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   securitySchemes:
     apiKeyBasic:
       type: http

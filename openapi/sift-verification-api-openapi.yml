@@ -89,32 +89,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    ApiError:
-      type: object
-      description: Modeled error envelope. Sift returns a numeric status and error_message.
-      properties:
-        status:
-          type: integer
-          description: Sift status code (0 indicates success; non-zero indicates an error).
-        error_message:
-          type: string
-        time:
-          type: integer
-          format: int64
-    VerificationResponse:
-      type: object
-      properties:
-        status:
-          type: integer
-          description: Sift status code for the verification operation.
-        error_message:
-          type: string
-        sent_at:
-          type: integer
-          format: int64
-        checked_at:
-          type: integer
-          format: int64
     VerificationSendRequest:
       type: object
       description: Request to send an OTP (modeled from documented examples).
@@ -141,6 +115,18 @@ components:
           type: object
           description: The Sift event context that triggered the verification.
           additionalProperties: true
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
     VerificationResendRequest:
       type: object
       required:
@@ -150,6 +136,20 @@ components:
           type: string
         verified_event:
           type: string
+    VerificationResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: Sift status code for the verification operation.
+        error_message:
+          type: string
+        sent_at:
+          type: integer
+          format: int64
+        checked_at:
+          type: integer
+          format: int64
     VerificationCheckRequest:
       type: object
       required:

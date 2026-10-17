@@ -106,18 +106,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ApiError:
-      type: object
-      description: Modeled error envelope. Sift returns a numeric status and error_message.
-      properties:
-        status:
-          type: integer
-          description: Sift status code (0 indicates success; non-zero indicates an error).
-        error_message:
-          type: string
-        time:
-          type: integer
-          format: int64
     AbuseScore:
       type: object
       properties:
@@ -139,6 +127,18 @@ components:
               details:
                 type: object
                 additionalProperties: true
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
     ScoreResponse:
       type: object
       description: Sift Score response (modeled). Scores range 0-100; higher is riskier. The scores object is keyed by abuse type, each carrying a score and reason codes.
@@ -166,14 +166,14 @@ components:
       schema:
         type: string
   responses:
-    Unauthorized:
-      description: Missing or invalid API key.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:

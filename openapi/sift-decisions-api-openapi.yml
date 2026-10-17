@@ -177,18 +177,33 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    ApiError:
+    DecisionRequest:
       type: object
-      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      description: Request to apply a decision to an entity (modeled from documented examples).
+      required:
+      - decision_id
+      - source
       properties:
-        status:
-          type: integer
-          description: Sift status code (0 indicates success; non-zero indicates an error).
-        error_message:
+        decision_id:
+          type: string
+          description: The ID of a decision configured in the Sift console.
+          example: block_user_payment_abuse
+        source:
+          type: string
+          enum:
+          - MANUAL_REVIEW
+          - AUTOMATED_RULE
+          - CHARGEBACK
+          description: What produced the decision.
+        analyst:
+          type: string
+          description: Identifier (e.g. email) of the analyst, required when source is MANUAL_REVIEW.
+        description:
           type: string
         time:
           type: integer
           format: int64
+          description: Epoch milliseconds the decision was made.
     DecisionList:
       type: object
       properties:
@@ -220,6 +235,18 @@ components:
           - block
           - watch
           - accept
+    ApiError:
+      type: object
+      description: Modeled error envelope. Sift returns a numeric status and error_message.
+      properties:
+        status:
+          type: integer
+          description: Sift status code (0 indicates success; non-zero indicates an error).
+        error_message:
+          type: string
+        time:
+          type: integer
+          format: int64
     DecisionApplyResponse:
       type: object
       properties:
@@ -257,46 +284,12 @@ components:
                 format: int64
               webhook_succeeded:
                 type: boolean
-    DecisionRequest:
-      type: object
-      description: Request to apply a decision to an entity (modeled from documented examples).
-      required:
-      - decision_id
-      - source
-      properties:
-        decision_id:
-          type: string
-          description: The ID of a decision configured in the Sift console.
-          example: block_user_payment_abuse
-        source:
-          type: string
-          enum:
-          - MANUAL_REVIEW
-          - AUTOMATED_RULE
-          - CHARGEBACK
-          description: What produced the decision.
-        analyst:
-          type: string
-          description: Identifier (e.g. email) of the analyst, required when source is MANUAL_REVIEW.
-        description:
-          type: string
-        time:
-          type: integer
-          format: int64
-          description: Epoch milliseconds the decision was made.
   parameters:
-    ContentId:
-      name: content_id
+    AccountId:
+      name: account_id
       in: path
       required: true
-      description: The unique identifier for the content, URL-encoded.
-      schema:
-        type: string
-    SessionId:
-      name: session_id
-      in: path
-      required: true
-      description: The unique identifier for the session, URL-encoded.
+      description: Your numeric Sift Account ID.
       schema:
         type: string
     UserId:
@@ -306,6 +299,13 @@ components:
       description: The unique identifier for the user, URL-encoded.
       schema:
         type: string
+    ContentId:
+      name: content_id
+      in: path
+      required: true
+      description: The unique identifier for the content, URL-encoded.
+      schema:
+        type: string
     OrderId:
       name: order_id
       in: path
@@ -313,22 +313,22 @@ components:
       description: The unique identifier for the order, URL-encoded.
       schema:
         type: string
-    AccountId:
-      name: account_id
+    SessionId:
+      name: session_id
       in: path
       required: true
-      description: Your numeric Sift Account ID.
+      description: The unique identifier for the session, URL-encoded.
       schema:
         type: string
   responses:
-    Unauthorized:
-      description: Missing or invalid API key.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:
