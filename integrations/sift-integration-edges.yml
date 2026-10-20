@@ -6,42 +6,10 @@ checked:
 - https://zapier.com/api/v4/apps/
 - olo/integrations/olo-integration-edges.yml
 - ping-identity/integrations/ping-identity-integration-edges.yml
+- zendesk/integrations/zendesk-integration-edges.yml
 source:
 - ping-identity/integrations/ping-identity-integration-edges.yml
 edges:
-- partner_name: Olo (own)
-  partner: olo
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.olo.com/partners/sift-science
-  mirror_of: olo/integrations/olo-integration-edges.yml
-  apps:
-  - Sift
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
-  category: Payment Security
-- partner_name: Ping Identity (own)
-  partner: ping-identity
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://marketplace.pingone.com/item/sift-davinci-connector
-  mirror_of: ping-identity/integrations/ping-identity-integration-edges.yml
-  apps:
-  - Sift Connector
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
 - partner_name: Zapier
   partner: zapier
   partner_match: aggregator
@@ -97,3 +65,53 @@ edges:
     builder: unknown (community connector; contributor not in the record)
   detected_by: sweep-data-integration.py
   first_seen: '2026-10-18'
+- partner_name: Olo (own)
+  partner: olo
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.olo.com/partners/sift-science
+  mirror_of: olo/integrations/olo-integration-edges.yml
+  apps:
+  - Sift
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Payment Security
+- partner_name: Ping Identity (own)
+  partner: ping-identity
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.pingone.com/item/sift-davinci-connector
+  mirror_of: ping-identity/integrations/ping-identity-integration-edges.yml
+  apps:
+  - Sift Connector
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+- partner_name: Zendesk (own)
+  partner: zendesk
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.zendesk.com/marketplace/apps/support/831602/sift/
+  mirror_of: zendesk/integrations/zendesk-integration-edges.yml
+  apps:
+  - Sift
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: Security, Risk and Compliance
