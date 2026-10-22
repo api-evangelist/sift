@@ -7,6 +7,7 @@ checked:
 - olo/integrations/olo-integration-edges.yml
 - ping-identity/integrations/ping-identity-integration-edges.yml
 - zendesk/integrations/zendesk-integration-edges.yml
+- adobe-commerce/integrations/adobe-commerce-integration-edges.yml
 source:
 - ping-identity/integrations/ping-identity-integration-edges.yml
 edges:
@@ -115,3 +116,20 @@ edges:
   detected: '2026-10-20'
   detected_by: mirror-platform-listings.py
   category: Security, Risk and Compliance
+- partner_name: Adobe Commerce (own)
+  partner: adobe-commerce
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://commercemarketplace.adobe.com/sift-module-payment-protection.html
+  mirror_of: adobe-commerce/integrations/adobe-commerce-integration-edges.yml
+  apps:
+  - Sift Payment Protection
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Adobe Commerce Marketplace extension
