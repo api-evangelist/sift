@@ -1,4 +1,4 @@
-# Sift (sift)
+# Sift
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,193 +64,138 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse. Applications stream user events to the Sift Events API, retrieve real-time risk Sift Scores (0-100) per abuse type, and act on them through the Decisions API, automated Workflows, verification (OTP), and PSP merchant risk management.
+Sift is a digital trust and safety platform that uses machine learning to detect and prevent online fraud and abuse - payment fraud, account takeover, account abuse, content abuse, and promotion abuse. Applications stream user events to the Sift Events API, retrieve real-time risk Sift Scores (0-100) per abuse type, and act on them through the Decisions API, automated Workflows, verification (OTP), and PSP merchant risk management. Sift exposes a documented public REST API over HTTPS at https://api.sift.com with API-key authentication.
 
-## Access Model (Honest Summary)
+**Areas:** Fraud Prevention · Risk Management · Trust and Safety · Machine Learning · Payment Fraud · Account Takeover · Chargebacks · Digital Trust
 
-- **Public, documented REST API** over HTTPS at `https://api.sift.com`. Interactive docs at [developers.sift.com](https://developers.sift.com/docs).
-- **Authentication is by API key.** Ingestion APIs (Events, Score, Labels) accept the key either as `$api_key` in the JSON body or via HTTP Basic auth (API key as username, empty password). The account-scoped APIs (Decisions, Workflows, PSP Merchant Management) use HTTP Basic auth **and** require your numeric Account ID in the path. No OAuth.
-- **Not self-serve / not free.** Sift is a commercial B2B platform. You need a Sift account, and API credentials are provisioned during a sales-led onboarding. Pricing is custom (contact sales) and is **not** published as public rate cards.
-- **REST only - no public WebSocket API.** Decision notifications are delivered outbound via webhooks; there is no documented `wss://` streaming surface.
-- **Versioning is per API.** The Events, Score, and Labels APIs are on `v205`; Decisions, Workflows, and PSP Merchant Management are on `v3`; Verification is on `v1`.
+## Sift on APIs.io
 
-This entry is grounded in Sift's live public developer documentation and its officially maintained client libraries (Python, Ruby, Java, Node, PHP). Sift does not publish a single machine-readable OpenAPI definition; the `openapi/sift-openapi.yml` here is **modeled by API Evangelist** from those documented endpoints. Request/response schemas are representative where Sift documents examples rather than full JSON Schemas - see `review.yml` for the confirmed-vs-modeled breakdown.
+Everything profiled for Sift is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/sift/](https://apis.io/providers/sift/)** — or go straight to one of the APIs or properties below.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/sift/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/sift/refs/heads/main/apis.yml)
+### APIs (7)
 
-## Tags
+- [Sift Decisions API](https://apis.io/apis/sift/sift-decisions-api/) — Apply and retrieve decisions against users, orders, sessions, and content.
+- [Sift Events API](https://apis.io/apis/sift/sift-events-api/) — Stream user activity to Sift's machine learning models.
+- [Sift Labels API](https://apis.io/apis/sift/sift-labels-api/) — Legacy API for labeling users to train models.
+- [Sift PSP Merchant Management API](https://apis.io/apis/sift/sift-psp-merchant-management-api/) — Manage sub-merchant profiles for payment service providers.
+- [Sift Score API](https://apis.io/apis/sift/sift-score-api/) — Retrieve real-time Sift Scores per abuse type.
+- [Sift Verification API](https://apis.io/apis/sift/sift-verification-api/) — One-time passcode (OTP) step-up verification.
+- [Sift Workflows API](https://apis.io/apis/sift/sift-workflows-api/) — Retrieve the status and results of Sift Workflow runs.
 
-- Fraud Detection
-- Fraud Prevention
-- Risk
-- Trust and Safety
-- Machine Learning
-- Payment Fraud
-- Account Takeover
-- Chargebacks
-- Digital Trust
+### Published properties
 
-## Timestamps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **Created:** 2026-07-12
-- **Modified:** 2026-07-12
+#### MCP servers (1)
 
-## APIs
+Model Context Protocol servers that expose the API to agents.
 
-### Sift Events API
+- [sift](https://apis.io/servers/sift/sift/)
 
-Streams user activity - account creation, logins, orders, transactions, content, chargebacks, and more - to Sift's machine learning models via `POST /v205/events`. Supports both reserved event types (prefixed with `$`) and custom events, and can return a real-time Sift Score inline with `return_score=true`.
+#### Agentic access (1)
 
-- **Human URL:** [https://developers.sift.com/docs/curl/events-api/overview](https://developers.sift.com/docs/curl/events-api/overview)
-- **Base URL:** `https://api.sift.com`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Sift Agentic Access](https://apis.io/agentic-access/sift/sift-agentic-access/)
 
-- Events
-- Fraud Detection
-- Machine Learning
+#### Collections (8)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://developers.sift.com/docs/curl/events-api/overview)
-- [API Reference](https://developers.sift.com/docs/curl/apis-overview)
-- [OpenAPI](openapi/sift-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sift.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sift.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Sift API](https://apis.io/collections/sift/open-sift/)
+- [Sift Decisions API](https://apis.io/collections/sift/open-sift-decisions-api/)
+- [Sift Decisions Events API](https://apis.io/collections/sift/open-sift-events-api/)
+- [Sift Decisions Labels API](https://apis.io/collections/sift/open-sift-labels-api/)
+- [Sift Decisions PSP Merchant Management API](https://apis.io/collections/sift/open-sift-psp-merchant-management-api/)
+- [Sift Decisions Score API](https://apis.io/collections/sift/open-sift-score-api/)
+- [Sift Decisions Verification API](https://apis.io/collections/sift/open-sift-verification-api/)
+- [Sift Decisions Workflows API](https://apis.io/collections/sift/open-sift-workflows-api/)
 
-### Sift Score API
+#### Security (2)
 
-Retrieves a user's real-time Sift Score (0-100, higher is riskier) per abuse type - `payment_abuse`, `account_abuse`, `account_takeover`, `content_abuse`, and `promotion_abuse` - along with reason codes. Includes synchronous score endpoints that fetch the latest score or rescore a user on demand.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://developers.sift.com/docs/curl/score-api/overview](https://developers.sift.com/docs/curl/score-api/overview)
-- **Base URL:** `https://api.sift.com`
+- [Sift Authentication](https://apis.io/security/sift/sift-authentication/)
+- [Sift Domain Security](https://apis.io/security/sift/sift-domain-security/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Risk
-- Score
-- Fraud Detection
+Published plans, tiers and prices.
 
-#### Properties
+- [Sift Plans Pricing](https://apis.io/plans/sift/sift-plans-pricing/)
 
-- [Documentation](https://developers.sift.com/docs/curl/score-api/overview)
-- [OpenAPI](openapi/sift-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sift.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sift.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### Sift Decisions API
+Published request limits.
 
-Applies and retrieves decisions (accept, watch, block) against Sift entities - users, orders, sessions, and content - scoped to an account. Decisions record the outcome of manual or automated review, feed Sift's models, and trigger downstream webhooks. The modern replacement for the legacy Labels API.
+- [Sift Rate Limits](https://apis.io/rate-limits/sift/sift-rate-limits/)
 
-- **Human URL:** [https://developers.sift.com/docs/curl/decisions-api/overview](https://developers.sift.com/docs/curl/decisions-api/overview)
-- **Base URL:** `https://api.sift.com`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Decisions
-- Trust and Safety
-- Workflow
+- [Sift Finops](https://apis.io/finops/sift/sift-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://developers.sift.com/docs/curl/decisions-api/overview)
-- [OpenAPI](openapi/sift-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sift.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sift.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Sift Workflow Status API
-
-Retrieves the status and results of a Sift Workflow run by `run_id`, including the decisions a workflow applied to an entity. Workflows automate scoring, routing, and decisioning based on Sift Scores and business rules.
-
-- **Human URL:** [https://developers.sift.com/docs/curl/workflows-api/workflow-decisions](https://developers.sift.com/docs/curl/workflows-api/workflow-decisions)
-- **Base URL:** `https://api.sift.com`
-
-#### Tags
-
-- Workflow
-- Automation
-- Decisions
-
-#### Properties
-
-- [Documentation](https://developers.sift.com/docs/curl/workflows-api/workflow-decisions)
-- [OpenAPI](openapi/sift-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sift.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sift.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Sift Labels API
-
-Legacy API for labeling a user as good or bad for a given abuse type to train Sift's models via `POST` and `DELETE /v205/users/{user_id}/labels`. Sift recommends the Decisions API for new integrations; Labels remain documented for backfilling historical fraud outcomes.
-
-- **Human URL:** [https://developers.sift.com/docs/curl/labels-api/overview](https://developers.sift.com/docs/curl/labels-api/overview)
-- **Base URL:** `https://api.sift.com`
-
-#### Tags
-
-- Labels
-- Training
-- Legacy
-
-#### Properties
-
-- [Documentation](https://developers.sift.com/docs/curl/labels-api/overview)
-- [OpenAPI](openapi/sift-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sift.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sift.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Sift Verification API
-
-Step-up verification for high-risk actions. Sends, resends, and checks one-time passcodes (OTP) via `POST /v1/verification/send`, `/resend`, and `/check` to confirm a user's identity and mitigate account takeover.
-
-- **Human URL:** [https://developers.sift.com/docs/curl/verification-api/overview](https://developers.sift.com/docs/curl/verification-api/overview)
-- **Base URL:** `https://api.sift.com`
-
-#### Tags
-
-- Verification
-- OTP
-- Account Takeover
-
-#### Properties
-
-- [Documentation](https://developers.sift.com/docs/curl/verification-api/overview)
-- [OpenAPI](openapi/sift-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sift.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sift.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Sift PSP Merchant Management API
-
-For payment service providers and marketplaces - create, update, list, and retrieve sub-merchant profiles under an account so Sift can monitor merchant onboarding and transaction risk across a payments portfolio.
-
-- **Human URL:** [https://developers.sift.com/docs/curl/psp-merchant-management-api/overview](https://developers.sift.com/docs/curl/psp-merchant-management-api/overview)
-- **Base URL:** `https://api.sift.com`
-
-#### Tags
-
-- PSP
-- Payment Fraud
-- Merchant Risk
-
-#### Properties
-
-- [Documentation](https://developers.sift.com/docs/curl/psp-merchant-management-api/overview)
-- [OpenAPI](openapi/sift-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sift.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sift.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Domain Security](security/sift-domain-security.yml)
-- [Authentication](authentication/sift-authentication.yml)
-- [GitHub Organization](https://github.com/SiftScience)
-- [LinkedIn](https://www.linkedin.com/company/sift-science)
 - [Website](https://sift.com)
 - [Documentation](https://developers.sift.com/docs)
-- [Plans](plans/sift-plans-pricing.yml)
-- [Rate Limits](rate-limits/sift-rate-limits.yml)
-- [Fin Ops](finops/sift-finops.yml)
+- [Blog](https://sift.com/blog)
+- [GitHub](https://github.com/SiftScience)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 26.7** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 51.3 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 7.9 |
+
+**Agent readiness 28.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 10.0** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/sift/](https://apis.io/providers/sift/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Sift: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/sift/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
